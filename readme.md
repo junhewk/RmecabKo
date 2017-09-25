@@ -1,4 +1,4 @@
-## RMecabKo [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
+## RmecabKo [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
 
 [은전한닢 프로젝트](http://eunjeon.blogspot.com/) `mecab-ko`의 R wrapper입니다.
 
