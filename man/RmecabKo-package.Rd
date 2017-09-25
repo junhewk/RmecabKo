@@ -30,7 +30,7 @@ Maintainer: Junhewk Kim <junhewk.kim@gmail.com>
 \keyword{ Korean, tagging, nlp }
 \examples{
   \dontrun{
-     mecab("안녕하세요.")
-     mecab(list("안녕하세요.", "은전한닢 프로젝트의 R wrapper입니다."))
+     pos("안녕하세요.")
+     pos(list("안녕하세요.", "은전한닢 프로젝트의 R wrapper입니다."))
   }
 }
