@@ -1,0 +1,5 @@
+useDynLib(RmecabKo)
+
+export(pos)
+
+importFrom(Rcpp, evalCpp)

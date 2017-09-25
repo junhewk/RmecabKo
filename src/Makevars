@@ -1,0 +1,2 @@
+PKG_CPPFLAGS = `mecab-config --cflags`
+PKG_LIBS = `mecab-config --libs`

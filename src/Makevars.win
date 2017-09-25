@@ -1,0 +1,2 @@
+PKG_CPPFLAGS = -DDLL_IMPORT -I.
+PKG_LIBS = libmecab.dll
