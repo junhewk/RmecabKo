@@ -78,10 +78,10 @@ $`은전한닢 프로젝트 R wrapper입니다.`
 
 문의사항은 Issues에 올려주시면 감사하겠습니다.
 
-### Contributors
+### Thanks to and Contributors
 
-[은전한닢 프로젝트(이용운, 유영호)](http://eunjeon.blogspot.com/): `mecab` 한국어 fork 
-[윤원섭](www.github.com/Pusnow): `mecab-ko-msvc`, `mecab-ko-dic-msvc` VC++ 빌드
+* [은전한닢 프로젝트(이용운, 유영호)](http://eunjeon.blogspot.com/): `mecab` 한국어 fork 
+* [윤원섭](www.github.com/Pusnow): `mecab-ko-msvc`, `mecab-ko-dic-msvc` VC++ 빌드
 
 ### TODO
 
