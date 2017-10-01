@@ -8,6 +8,8 @@
 
 이 패키지는 은전한닢 프로젝트의 R wrapper입니다. Mac OSX, Linux에서는 `mecab-ko`와 `mecab-ko-dic`를 먼저 설치해야 합니다. [Rcpp](http://dirk.eddelbuettel.com/code/rcpp.html)를 통해 제작했습니다. C++에서 직접 동작하므로 다른 형태소 분석기에 비해 상당히 빠릅니다. Windows에서는 VC++로 빌드한 `mecab-ko-msvc`, `mecab-ko-dic-msvc`를 system command로 구동합니다. 따라서 Windows에서는 속도 저하가 발생합니다.
 
+Rcpp가 VC++에서 컴파일이 되지 않는 반면, `mecab-ko`는 현재 VC++에서만 컴파일이 가능합니다. Cygwin/Mingw로 컴파일해보려 노력했지만 성공하지 못했습니다. 일단 패키지에 컴파일된 파일을 추가하는 것으로 수정하였으며, 추후 컴파일된 `mecab-ko`와 `mecab-ko-dic`을 다운로드받는 함수를 추가하도록 하겠습니다. 아직은 패키지에 그대로 포함되어 있어, 용랑이 많이 증가한 점 양해를 구합니다.
+
 ### Installation
 
 #### Mac OSX, Linux
