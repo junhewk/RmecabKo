@@ -4,3 +4,6 @@
 posRcpp <- function(phrase, dic) {
     .Call('RmecabKo_posRcpp', PACKAGE = 'RmecabKo', phrase, dic)
 }
+nounsRcpp <- function(phrase, dic) {
+    .Call('RmecabKo_nounsRcpp', PACKAGE = 'RmecabKo', phrase, dic)
+}

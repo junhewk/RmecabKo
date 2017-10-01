@@ -1,8 +1,11 @@
 
 #include <Rcpp.h>
 #include <iostream>
-#include <mecab.h>
 #include <string>
+
+#if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
+
+#include <mecab.h>
 
 #define CHECK(eval) if (! eval) { \
 const char *e = tagger ? tagger->what() : MeCab::getTaggerError();\
@@ -13,7 +16,7 @@ return R_NilValue; }
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List posRcpp(const List & phrase_list, const StringVector & dic){
+List posRcpp(const CharacterVector & phrase, const CharacterVector & dic){
   
   const char * dicpath = as<const char *>(dic);
   
@@ -22,11 +25,10 @@ List posRcpp(const List & phrase_list, const StringVector & dic){
   
   // Gets Node object.
   Rcpp::List tagged_list;
-  int n = phrase_list.size();
   
-  for (int i = 0; i < n; i++) {
-    std::string phrase = Rcpp::as<std::string>(Rcpp::CharacterVector (phrase_list(i)));
-    const MeCab::Node* node = tagger->parseToNode(phrase.c_str());
+  for (int i = 0; i < phrase.size(); i++) {
+    std::string text = Rcpp::as<std::string>(phrase(i));
+    const MeCab::Node* node = tagger->parseToNode(text.c_str());
     CHECK(node);
 
     Rcpp::CharacterVector tagged;
@@ -47,3 +49,17 @@ List posRcpp(const List & phrase_list, const StringVector & dic){
   delete tagger;
   return tagged_list;
 }
+
+#elif defined(_WIN32)
+
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+List posRcpp(const CharacterVector & phrase, const CharacterVector& dic) {
+  // mecab in Windows needs to be compiled by VC++, but Rcpp doesn't compatible with it.
+  Rcpp::List returnValue;
+  returnValue.push_back("Rcpp doesn't support VC++.");
+  return returnValue;
+}
+
+#endif

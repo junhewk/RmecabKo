@@ -11,12 +11,12 @@
 }
 \details{
   
-  It is based on the \code{Eunjeon Project}. You need to install \code{mecab-ko} and \code{mecab-ko-dic} before install this package in R.
+  It is based on the \code{Eunjeon Project}. For Mac OSX and Linux, You need to install \code{mecab-ko} and \code{mecab-ko-dic} before install this package in R.
 
   \code{mecab-ko}: \url{https://bitbucket.org/eunjeon/mecab-ko}
   \code{mecab-ko-dic}: \url{https://bitbucket.org/eunjeon/mecab-ko-dic}
 
-  Windows version is still working on. I don't have an windows machine, so if you can test the code, it'll be very helpful for developing it.
+  In Windows, \code{mecab-ko-msvc} and \code{mecab-ko-dic-msvc} is included in the package. It is operated by system command and file I/O, the speed of the analysis is slow compared to the Linux-based operating system.
 
 }
 \author{
@@ -25,12 +25,21 @@ Junhewk Kim
 Maintainer: Junhewk Kim <junhewk.kim@gmail.com>
 }
 \references{
-  eunjeon project, available at \url{http://eunjeon.blogspot.kr/}
+  \itemize{
+    \item \href{http://eunjeon.blogspot.com}{Eunjeon project}
+    \item \href{https://github.com/Pusnow}{Wonsup Yoon}, mecab-ko VC++ builds at \url{https://github.com/Pusnow/mecab-ko-msvc}, \url{https://github.com/Pusnow/mecab-ko-dic-msvc}
+  }
 }
 \keyword{ Korean, tagging, nlp }
 \examples{
   \dontrun{
-     pos("안녕하세요.")
-     pos(list("안녕하세요.", "은전한닢 프로젝트의 R wrapper입니다."))
+    # install.packages("devtools")
+    devtools::install_github("junhewk/RmecabKo")
+
+    pos("안녕하세요.")
+    pos(c("안녕하세요.", "은전한닢 프로젝트의 R wrapper입니다."))
+
+    nouns("안녕하세요.")
+    nouns(c("안녕하세요.", "은전한닢 프로젝트의 R wrapper입니다."))
   }
 }

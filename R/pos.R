@@ -2,31 +2,75 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 pos <- function(phrase) {
+  if (typeof(phrase) != "character") {
+    stop("'phrase' must be a character vector")
+  }
+  
 	if(Sys.info()["sysname"] == "Darwin" | Sys.info()["sysname"] == "Linux") {
+	  
 		dicpath <- "/usr/local/lib/mecab/dic/mecab-ko-dic"
+		
 		if(dir.exists(dicpath)) {
-		dicpath <- paste0("-d ", dicpath)
+		  dicpath <- paste0("-d ", dicpath)
 		} else {
-		stop(paste0("Mecab-ko-dic is not found on ", dirpath, ". Please check https://bitbucket.org/eunjeon/mecab-ko-dic."))
+		  stop(paste0("Mecab-ko-dic is not found on ", dirpath, ". Please check https://bitbucket.org/eunjeon/mecab-ko-dic."))
 		}
-	} else {
-		stop("Eunjeon project supports Mac, Linux, and Windows only.")
-	}
 
-	# TODO: Support Windows with mecab-ko-msvc
-	# else if(Sys.info()["sysname"] == "Windows") {
-	# 	 dicpath <- "C:\\mecab\\mecab-ko-dic"
-	# 	 if(dir.exists(dicpath)) {
-	#		 dicpath <- paste0("-d ", dicpath)
-	#	 } else {
-	#		 stop(paste0("Mecab-ko-dic is not found on ", dicpath, ". Please check https://github.com/Pusnow/mecab-ko-dic-msvc."))
-	#	 }
-
-	if (typeof(phrase) != "list") {
-  		# type coersion to the list
-  		phrase <- as.list(phrase)
-  	}
+		# Rcpp function to tagging
   	tagged <- posRcpp(phrase, dicpath)
-	names(tagged) <- phrase
-	return(tagged)
+		
+	} else if(Sys.info()["sysname"] == "Windows") {
+		# loading /inst/mecab/mecab.exe (mecab-ko-msvc) with system.file and system
+		mecabKo <- system.file("mecab", "mecab.exe", package="RmecabKo")
+		# mecabKoDic root in not working
+		mecabKoDic <- shortPathName(file.path(system.file(package="RmecabKo"), "mecab", "mecab-ko-dic"))
+		
+		# saving phrase to UTF-8 txt file
+		phraseFile <- shortPathName(tempfile("mecab_phrase_"))
+
+		con <- file(phraseFile, "a")
+  	tryCatch({
+    	cat(iconv(phrase, to="UTF-8"), file=con, sep="\n")
+  	},
+  	finally = {
+    	close(con)
+  	})
+
+  	outputFile <- shortPathName(tempfile("mecab_out_"))
+  	
+  	mecabOption <- c(paste0("--dicdir=", mecabKoDic), paste0("--output=", outputFile), phraseFile)
+  	
+  	# run mecab.exe
+  	system2(mecabKo, mecabOption)
+
+  	con <- file(outputFile, "r")
+  	posResult <- readLines(con, encoding="UTF-8")
+  	close(con)
+  	
+  	i <- 1
+  	tagged <- list()
+  	taggedLine <- c()
+  	
+    for(posLine in posResult) {
+      if(posLine=="EOS") {
+        if(is.null(taggedLine)) {
+          length(tagged) <- i
+        } else {
+          tagged[[i]] <- taggedLine
+        }
+        i <- i + 1
+        taggedLine <- c()
+      } else if(posLine[1] == ",") {
+        taggedLine <- c(taggedLine, ",/SC")
+      } else {
+        taggedElements <- strsplit(posLine, ",")
+        taggedLine <- c(taggedLine, gsub("\t", "/", taggedElements[[1]][1]))
+      }
+    }
+  	
+  	file.remove(phraseFile)
+  	file.remove(outputFile)
+	} 
+  names(tagged) <- phrase
+  return(tagged)
 }

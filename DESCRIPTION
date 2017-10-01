@@ -1,8 +1,8 @@
 Package: RmecabKo
 Type: Package
 Title: Rcpp Wrapper for Eunjeon Project
-Version: 0.1
-Date: 2017-09-21
+Version: 0.1.5
+Date: 2017-09-30
 Author: Junhewk Kim
 Maintainer: Junhewk Kim <junhewk.kim@gmail.com>
 Description: Rcpp Wrapper for Eunjeon Project
