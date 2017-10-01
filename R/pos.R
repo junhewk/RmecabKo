@@ -60,7 +60,7 @@ pos <- function(phrase) {
         }
         i <- i + 1
         taggedLine <- c()
-      } else if(posLine[1] == ",") {
+      } else if(substring(posLine, 1, 1) == ",") {
         taggedLine <- c(taggedLine, ",/SC")
       } else {
         taggedElements <- strsplit(posLine, ",")
