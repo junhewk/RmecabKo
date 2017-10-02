@@ -1,5 +1,7 @@
 useDynLib(RmecabKo)
 
-export(pos, nouns)
+export(pos)
+export(nouns)
+export(install_mecab)
 
 importFrom(Rcpp, evalCpp)

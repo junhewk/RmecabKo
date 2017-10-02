@@ -6,7 +6,7 @@ nouns <- function(phrase) {
     stop("'phrase' must be a character vector")
   }
   
-  if(Sys.info()["sysname"] == "Darwin" | Sys.info()["sysname"] == "Linux") {
+  if(is_osx() | is_linux()) {
     
     dicpath <- "/usr/local/lib/mecab/dic/mecab-ko-dic"
     
@@ -19,14 +19,19 @@ nouns <- function(phrase) {
     # Rcpp function to tagging
     tagged <- nounsRcpp(phrase, dicpath)
     
-  } else if(Sys.info()["sysname"] == "Windows") {
+  } else if(is_windows()) {
+    
+    if(!mecab_installed()) {
+      stop("Mecab binary is not installed in C:\\mecab. Please run install_mecab().")
+    }
+
     # loading /inst/mecab/mecab.exe (mecab-ko-msvc) with system.file and system
-    mecabKo <- system.file("mecab", "mecab.exe", package="RmecabKo")
+    mecabKo <- shortPathName(file.path("C:/mecab", "mecab.exe"))
     # mecabKoDic root in not working
-    mecabKoDic <- shortPathName(file.path(system.file(package="RmecabKo"), "mecab", "mecab-ko-dic"))
+    mecabKoDic <- shortPathName(file.path("C:/mecab", "mecab-ko-dic"))
     
     # saving phrase to UTF-8 txt file
-    phraseFile <- shortPathName(tempfile("mecab_phrase_"))
+    phraseFile <- shortPathName(tempfile())
 
     con <- file(phraseFile, "a")
     tryCatch({
@@ -36,9 +41,9 @@ nouns <- function(phrase) {
       close(con)
     })
 
-    outputFile <- shortPathName(tempfile("mecab_out_"))
+    outputFile <- shortPathName(tempfile())
     
-    mecabOption <- c(paste0("--dicdir=", mecabKoDic), paste0("--output=", outputFile), phraseFile)
+    mecabOption <- c("-d", mecabKoDic, "-o", outputFile, phraseFile)
     
     # run mecab.exe
     system2(mecabKo, mecabOption)
@@ -68,8 +73,8 @@ nouns <- function(phrase) {
       }
     }
     
-    file.remove(phraseFile)
-    file.remove(outputFile)
+    suppressWarnings(file.remove(phraseFile))
+    suppressWarnings(file.remove(outputFile))
   } 
   names(tagged) <- phrase
   return(tagged)

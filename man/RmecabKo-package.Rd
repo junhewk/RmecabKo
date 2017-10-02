@@ -16,7 +16,7 @@
   \code{mecab-ko}: \url{https://bitbucket.org/eunjeon/mecab-ko}
   \code{mecab-ko-dic}: \url{https://bitbucket.org/eunjeon/mecab-ko-dic}
 
-  In Windows, \code{mecab-ko-msvc} and \code{mecab-ko-dic-msvc} is included in the package. It is operated by system command and file I/O, the speed of the analysis is slow compared to the Linux-based operating system.
+  In Windows, \code{install_mecab()} function will install \code{mecab-ko-msvc} and \code{mecab-ko-dic-msvc} in \code{C:\mecab}. It is operated by system command and file I/O, the speed of the analysis is slow compared to the Linux-based operating system.
 
 }
 \author{
@@ -35,6 +35,8 @@ Maintainer: Junhewk Kim <junhewk.kim@gmail.com>
   \dontrun{
     # install.packages("devtools")
     devtools::install_github("junhewk/RmecabKo")
+    # On Windows platform only
+    install_mecab()
 
     pos("안녕하세요.")
     pos(c("안녕하세요.", "은전한닢 프로젝트의 R wrapper입니다."))
