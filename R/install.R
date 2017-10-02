@@ -1,3 +1,20 @@
+#' Install mecab-ko-msvc and mecab-ko-dic-msvc
+#'
+#' \code{install_mecab} installs Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC.
+#' 
+#' This code checks and installs Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC in \code{C:/mecab}. Windows only.
+#'
+#' @return None. The function will halt when the current operation system is not Windows, or C:/mecab/mecab.exe exists.
+#'
+#' See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
+#' 
+#' @examples 
+#' \dontrun{
+#' install_mecab()
+#' }
+#' 
+#' @export
+
 install_mecab <- function() {
   
   # verify os

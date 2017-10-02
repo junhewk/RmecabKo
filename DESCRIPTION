@@ -11,3 +11,4 @@ Description: Rcpp Wrapper for Eunjeon Project
 Imports: Rcpp
 LinkingTo: Rcpp
 License: GPL (>= 2)
+RoxygenNote: 6.0.1
