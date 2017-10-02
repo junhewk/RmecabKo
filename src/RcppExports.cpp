@@ -5,9 +5,21 @@
 
 using namespace Rcpp;
 
+// nounsRcpp
+List nounsRcpp(const CharacterVector& phrase, const CharacterVector& dic);
+RcppExport SEXP _RmecabKo_nounsRcpp(SEXP phraseSEXP, SEXP dicSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const CharacterVector& >::type phrase(phraseSEXP);
+    Rcpp::traits::input_parameter< const CharacterVector& >::type dic(dicSEXP);
+    rcpp_result_gen = Rcpp::wrap(nounsRcpp(phrase, dic));
+    return rcpp_result_gen;
+END_RCPP
+}
 // posRcpp
 List posRcpp(const CharacterVector& phrase, const CharacterVector& dic);
-RcppExport SEXP RmecabKo_posRcpp(SEXP phraseSEXP, SEXP dicSEXP) {
+RcppExport SEXP _RmecabKo_posRcpp(SEXP phraseSEXP, SEXP dicSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -17,15 +29,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// nounsRcpp
-List nounsRcpp(const CharacterVector& phrase, const CharacterVector& dic);
-RcppExport SEXP RmecabKo_nounsRcpp(SEXP phraseSEXP, SEXP dicSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const CharacterVector& >::type phrase(phraseSEXP);
-    Rcpp::traits::input_parameter< const CharacterVector& >::type dic(dicSEXP);
-    rcpp_result_gen = Rcpp::wrap(nounsRcpp(phrase, dic));
-    return rcpp_result_gen;
-END_RCPP
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_RmecabKo_nounsRcpp", (DL_FUNC) &_RmecabKo_nounsRcpp, 2},
+    {"_RmecabKo_posRcpp", (DL_FUNC) &_RmecabKo_posRcpp, 2},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_RmecabKo(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

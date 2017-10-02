@@ -11,9 +11,9 @@
 
 }
 \references{
-  itemize{
-  	\item \href{http://eunjeon.blogspot.com}{Eunjeon project}
-  	\item \href{https://github.com/Pusnow}{Wonsup Yoon}, mecab-ko VC++ builds
+  \itemize{
+  	\item{\href{http://eunjeon.blogspot.com}{Eunjeon project}}
+  	\item{\href{https://github.com/Pusnow}{Wonsup Yoon}, mecab-ko VC++ builds}
   }
 }
 \author{Junhewk Kim}
