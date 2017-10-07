@@ -2,6 +2,7 @@
 
 The goal of RmecabKo is to parse Korean phrases with `mecab-ko` ([Eunjeon project](http://eunjeon.blogspot.com/), and to provide helper functions to analyze Korean documents. RmecabKo provides R wrapper function of `mecab-ko` with `Rcpp` (in Mac OSX and Linux) or wrapper function of binary build of `mecab-ko-msvc` by system commands and file I/O (in Windows).
 
+For instructions in Korean, refer to [readme.rmd](https://github.com/junhewk/RmecabKo/blob/master/readme.rmd).
 
 ## Installation
 
@@ -37,7 +38,8 @@ $ su
 After the installation of `mecab-ko`, You can install RmecabKo from github with:
 
 ```
-# install.packages("devtools")
+install.packages("RmecabKo")
+# or, install.packages("devtools")
 devtools::install_github("junhewk/RmecabKo")
 ```
 
@@ -48,6 +50,7 @@ You need to install `mecab-ko-dic`, refer to [Bitbucket page](https://bitbucket.
 In Windows, `install_mecab` function is provided.
 
 ```
+install.packages("RmecabKo")
 # install.packages("devtools")
 devtools::install_github("junhewk/RmecabKo")
 install_mecab()
