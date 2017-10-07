@@ -1,18 +1,6 @@
----
-output: github_document
----
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
-)
-```
-
-# RmecabKo [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
+# RmecabKo [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RmecabKo)](https://cran.r-project.org/package=RmecabKo) [![Downloads](http://cranlogs.r-pkg.org/badges/RmecabKo?color=brightgreen)](http://www.r-pkg.org/pkg/RmecabKo)
 
 RmecabKo는 `mecab-ko` ([은전한닢 프로젝트](http://eunjeon.blogspot.com/))를 기반으로 한국어 문장 형태소 분석, 그리고 한국어 텍스트의 분석을 진행할 때 필요한 다른 패키지의 도움 함수를 제공하는 것을 목적으로 합니다. 
 
