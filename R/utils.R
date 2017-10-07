@@ -11,5 +11,11 @@ is_linux <- function() {
 }
 
 mecab_installed <- function() {
-  file.exists("C:\\mecab\\mecab.exe")
+  mecabLibs <- getOption("mecab.libpath")
+  
+  if (is_windows() && mecabLibs != "") {
+    file.exists(file.path(mecabLibs, "mecab.exe"))
+  } else {
+    return(FALSE)
+  }
 }

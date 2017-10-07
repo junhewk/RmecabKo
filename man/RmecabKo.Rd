@@ -15,7 +15,7 @@ It is based on the \code{Eunjeon Project}.
 For Mac OSX and Linux, You need to install \code{mecab-ko} and \code{mecab-ko-dic} before install this package in R.
 \code{mecab-ko}: \url{https://bitbucket.org/eunjeon/mecab-ko}
 \code{mecab-ko-dic}: \url{https://bitbucket.org/eunjeon/mecab-ko-dic}
-In Windows, \code{install_mecab()} function will install \code{mecab-ko-msvc} and \code{mecab-ko-dic-msvc} in \code{C:/mecab}.
+In Windows, \code{install_mecab(mecabLocation)} function will install \code{mecab-ko-msvc} and \code{mecab-ko-dic-msvc} in user specified directory.
 It is operated by system command and file I/O, the speed of the analysis is slow compared to the Linux-based operating system.
 }
 \examples{
@@ -23,7 +23,7 @@ It is operated by system command and file I/O, the speed of the analysis is slow
 # install.packages("devtools")
 devtools::install_github("junhewk/RmecabKo")
 # On Windows platform only
-install_mecab()
+install_mecab("D:/Rlibs/mecab")
 
 # For full POS tagging
 pos(phrase)

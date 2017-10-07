@@ -2,34 +2,45 @@
 #'
 #' \code{install_mecab} installs Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC.
 #' 
-#' This code checks and installs Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC in \code{C:/mecab}. Windows only.
+#' This code checks and installs Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC in user specified directory. Windows only.
+#' 
+#' @usage install_mecab(mecabLocation)
+#' 
+#' @param mecabLocation a directory to install Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC. 
 #'
-#' @return None. The function will halt when the current operation system is not Windows, or C:/mecab/mecab.exe exists.
+#' @return None. The function will halt when the current operation system is not Windows, or /mecabLocation/mecab.exe exists.
 #'
 #' See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
 #' 
 #' @examples 
 #' \dontrun{
-#' install_mecab()
+#' install_mecab("D:/Rlibs/mecab")
 #' }
 #' 
+#' @importFrom utils download.file unzip
 #' @export
 
-install_mecab <- function() {
+install_mecab <- function(mecabLocation) {
   
   # verify os
-  if(!is_windows()) {
+  if (!is_windows()) {
     stop("Unable to install mecab-ko-msvc on this platform. ",
          "Binary installation is available for Windows")
   }
   
-  if(mecab_installed()) {
-    stop("Mecab binary version is found in C:\\mecab.")
+  if (mecab_installed()) {
+    stop("Mecab binary version is found.")
   }
   
-  mecabLocation <- "C:\\mecab"
+  if (missing(mecabLocation)) {
+    stop("Please speficy the path to install Mecab-Ko library.")
+  }
   
-  suppressWarnings(dir.create(mecabLocation))
+  mecabLocCreated <- dir.create(mecabLocation, showWarnings = FALSE)
+  
+  if (!mecabLocCreated) {
+    stop(paste("Unable to make a new directory to", mecabLocation, sep = " "))
+  }
   
   # verify 64-bit
   # mecab-ko-msvc: https://github.com/Pusnow/mecab-ko-msvc
@@ -39,7 +50,7 @@ install_mecab <- function() {
     mecabDist <- "https://github.com/Pusnow/mecab-ko-msvc/releases/download/release-0.9.2-msvc-3/mecab-ko-msvc-x64.zip"
   }
   
-  mecabDest <- "C:\\mecab\\mecab.zip"
+  mecabDest <- file.path(mecabLocation, "mecab.zip")
   
   cat("Install mecab-ko-msvc...")
   
@@ -56,7 +67,7 @@ install_mecab <- function() {
     # set internal
     if(!internal2) {
       # store initial settings, and restore on exit
-      on.exit(suppressWarnings(setI2(internet2Start)))
+      on.exit(suppressWarnings(setI2(internal2)))
         
       # needed for https
       suppressWarnings(setI2(TRUE))
@@ -73,7 +84,7 @@ install_mecab <- function() {
   cat("Install mecab-ko-dic-msvc...")
   
   mecabDicDist <- "https://github.com/Pusnow/mecab-ko-dic-msvc/releases/download/mecab-ko-dic-2.0.1-20150920-msvc/mecab-ko-dic-msvc.zip"
-  mecabDicDest <- "C:\\mecab\\mecab_dic.zip"
+  mecabDicDest <- file.path(mecabLocation, "mecab_dic.zip")
   
   suppressWarnings(download.file(url=mecabDicDist, destfile=mecabDicDest, method=method))
   
@@ -82,5 +93,19 @@ install_mecab <- function() {
   # delete distribution files
   suppressWarnings(file.remove(mecabDest))
   suppressWarnings(file.remove(mecabDicDest))
+  
+  # save mecabLocation in the package location
+  mecabLibsLoc <- file.path(system.file(package = "RmecabKo"), "mecabLibs")
+  
+  con <- file(mecabLibsLoc, "a")
+    
+  tryCatch({
+    cat(mecabLocation, file=con, sep="\n")
+  },
+  finally = {
+    close(con)
+  })
+  
+  options(list(mecab.libpath = mecabLocation))
 }
 

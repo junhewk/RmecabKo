@@ -1,0 +1,130 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# RmecabKo [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
+
+RmecabKo는 `mecab-ko` ([은전한닢 프로젝트](http://eunjeon.blogspot.com/))를 기반으로 한국어 문장 형태소 분석, 그리고 한국어 텍스트의 분석을 진행할 때 필요한 다른 패키지의 도움 함수를 제공하는 것을 목적으로 합니다. 
+
+은전한닢 프로젝트가 기반으로 하고 있는 `mecab`은 일본어 형태소 분석기로, 띄어쓰기와 관계없이 형태소를 분석합니다. 인터넷에서 수집한 텍스트는 띄어쓰기에 오류가 있는 경우가 많아, 텍스트 분석을 진행할 때 은전한닢 프로젝트의 `mecab-ko`를 통해 진행하는 것이 유용할 수 있습니다.
+
+이 패키지는 은전한닢 프로젝트의 R wrapper입니다. Mac OSX, Linux에서는 `mecab-ko`와 `mecab-ko-dic`를 먼저 설치해야 합니다. [Rcpp](http://dirk.eddelbuettel.com/code/rcpp.html)를 통해 제작했습니다. C++에서 직접 동작하므로 다른 형태소 분석기에 비해 상당히 빠릅니다. Windows에서는 VC++로 빌드한 `mecab-ko-msvc`, `mecab-ko-dic-msvc`를 system command, file I/O로 구동합니다. 따라서 Windows에서는 속도 저하가 발생합니다.
+
+Rcpp가 VC++에서 컴파일이 되지 않는 반면, `mecab-ko`는 현재 VC++에서만 컴파일이 가능합니다. Cygwin/Mingw로 컴파일해보려 노력했지만 성공하지 못했습니다. 컴파일된 `mecab-ko-msvc`와 `mecab-ko-dic-msvc`를 `install_mecab()` 함수를 통해 원하시는 디렉터리(예, `C:/Rlibs/mecab`)에 설치한 후 사용하실 수 있습니다.
+
+
+## Installation
+
+17/10/6: `RmecabKo`가 **CRAN repository**에 등록되었습니다.
+
+### Mac OSX, Linux
+
+먼저 `mecab-ko`를 [Bitbucket repository](https://bitbucket.org/eunjeon/mecab-ko)에서 설치합니다.
+
+`mecab-ko` 소스를 [Download page](https://bitbucket.org/eunjeon/mecab-ko/downloads/)에서 다운로드할 수 있습니다. 다음,
+
+Mac OSX terminal에서:
+
+```{shell mecab-ko-installation-on-mac, eval=FALSE}
+$ tar zxfv mecab-ko-XX.tar.gz
+$ cd mecab-ko-XX
+$ ./configure 
+$ make
+$ make check
+$ sudo make install
+```
+
+Linux에서:
+
+```{shell mecab-ko-installation-on-linux, eval=FALSE}
+$ tar zxfv mecab-ko-XX.tar.gz
+$ cd mecab-ko-XX
+$ ./configure 
+$ make
+$ make check
+$ su
+# make install
+```
+
+`mecab-ko` 설치 후, github을 통해 RmecabKo 패키지를 설치하실 수 있습니다.
+
+```{r gh-installation, eval = FALSE}
+install.packages("RmecabKo")
+
+# or,
+
+# install.packages("devtools")
+devtools::install_github("junhewk/RmecabKo")
+```
+
+한국어 문장 분석을 위해서는 `mecab-ko-dic` 또한 설치해야 합니다. [Bitbucket page](https://bitbucket.org/eunjeon/mecab-ko-dic)를 참조해 주십시오. 설치 방법은 `mecab-ko`와 동일합니다. 아직 `mecab-ko-dic`이 `/usr/local/lib/mecab/dic/mecab-ko-dic`에 설치된 경우에만 정상 작동합니다. 추후 사전 설치 디렉토리를 환경 변수로 추가할 수 있도록 하겠습니다.
+
+### Windows
+
+윈도우의 경우, `install_mecab(mecabLocation)`을 통해 `mecab-ko` binary를 설치합니다. 꼭 설치 디렉터리를 지정해주셔야 합니다.
+
+```{r gh-installation-windows, eval=FALSE}
+install.packages("RmecabKo")
+install_mecab("C:/Rlibs/mecab")
+
+# or,
+
+# install.packages("devtools")
+devtools::install_github("junhewk/RmecabKo")
+install_mecab("D:/Rlibs/mecab")
+```
+
+
+## Example
+
+`pos`, `nouns` 함수를 제공합니다. 두 함수 모두 **문자열 벡터**를 입력값으로 받습니다. (0.1판의 리스트에서 변경하였습니다. 혼동을 드려 죄송합니다.)
+
+* `pos`는 문장 전체의 형태소 태깅을 제공합니다.
+* `nouns`는 명사만 추출하여 제공합니다.
+
+```{r example}
+library(RmecabKo)
+pos("안녕하세요.")
+pos(c("안녕하세요.", "은전한닢 프로젝트 R wrapper입니다."))
+nouns("안녕하세요.")
+nouns(c("안녕하세요.", "은전한닢 프로젝트 R wrapper입니다."))
+```
+
+[Github wiki](https://github.com/junhewk/RmecabKo/wiki)를 단장 중에 있습니다. 분석 사례와 적용 방법을 추가할 예정입니다.
+
+
+## Author
+
+김준혁 (junhewk.kim@gmail.com)
+
+
+## Thanks to and Contributor
+
+* [은전한닢 프로젝트(이용운, 유영호)](http://eunjeon.blogspot.com/): `mecab` 한국어 fork 
+* [윤원섭](www.github.com/Pusnow): `mecab-ko-msvc`, `mecab-ko-dic-msvc` VC++ 빌드
+
+
+### TODO
+
+1. <del>윈도우에서 구동 (`mecab-ko-msvc`): 제가 윈도우를 설치하지 않아 테스트를 하기가 어렵습니다. 도와주실 분을 찾습니다.</del>
+2. <del>사전 설치 디렉트로 환경 변수로 옮기고 수정할 수 있도록 변경</del>
+3. 자료형 추가
+4. <del>`mecab-ko-msvc`, `mecab-ko-dic-msvc` 설치 스크립트 제공 (Windows)</del>
+5. `mecab-ko`, `mecab-ko-dic` 설치 스크립트 제공 (Mac OSX, Linux)
+6. User Dictionary 함수 추가
+7. 다른 패키지 호환 함수 제공 (예, `tidytext` tokenizer 등)
+
+
+### License
+
+GPL (>= 2)

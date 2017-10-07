@@ -1,102 +1,82 @@
-## RmecabKo [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
+# RmecabKo [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
 
-[은전한닢 프로젝트](http://eunjeon.blogspot.com/) `mecab-ko`의 R wrapper입니다.
+The goal of RmecabKo is to parse Korean phrases with `mecab-ko` ([Eunjeon project](http://eunjeon.blogspot.com/), and to provide helper functions to analyze Korean documents. RmecabKo provides R wrapper function of `mecab-ko` with `Rcpp` (in Mac OSX and Linux) or wrapper function of binary build of `mecab-ko-msvc` by system commands and file I/O (in Windows).
 
-### About
 
-은전한닢 프로젝트가 기반으로 하고 있는 `mecab`은 일본어 형태소 분석기로, 띄어쓰기와 관계없이 형태소를 분석합니다. 인터넷에서 수집한 텍스트는 띄어쓰기에 오류가 있는 경우가 많아, 텍스트 분석을 진행할 때 은전한닢 프로젝트의 `mecab-ko`를 통해 진행하는 것이 유용한 경우가 있습니다.
+## Installation
 
-이 패키지는 은전한닢 프로젝트의 R wrapper입니다. Mac OSX, Linux에서는 `mecab-ko`와 `mecab-ko-dic`를 먼저 설치해야 합니다. [Rcpp](http://dirk.eddelbuettel.com/code/rcpp.html)를 통해 제작했습니다. C++에서 직접 동작하므로 다른 형태소 분석기에 비해 상당히 빠릅니다. Windows에서는 VC++로 빌드한 `mecab-ko-msvc`, `mecab-ko-dic-msvc`를 system command로 구동합니다. 따라서 Windows에서는 속도 저하가 발생합니다.
+### Mac OSX, Linux
 
-Rcpp가 VC++에서 컴파일이 되지 않는 반면, `mecab-ko`는 현재 VC++에서만 컴파일이 가능합니다. Cygwin/Mingw로 컴파일해보려 노력했지만 성공하지 못했습니다. 컴파일된 `mecab-ko-msvc`와 `mecab-ko-dic-msvc`를 `install_mecab()` 함수를 통해 `C:\mecab`에 설치한 후 사용하실 수 있습니다.
+First, install `mecab-ko` from the [Bitbucket repository](https://bitbucket.org/eunjeon/mecab-ko).
 
-### Installation
+You can download a source of `mecab-ko` from [Download page](https://bitbucket.org/eunjeon/mecab-ko/downloads/).
 
-#### Mac OSX, Linux
+In Mac OSX terminal:
 
-먼저 `mecab-ko`와 `mecab-ko-dic`을 설치합니다.
+```
+$ tar zxfv mecab-ko-XX.tar.gz
+$ cd mecab-ko-XX
+$ ./configure 
+$ make
+$ make check
+$ sudo make install
+```
 
-* [mecab-ko](https://bitbucket.org/eunjeon/mecab-ko)
-* [mecab-ko-dic](https://bitbucket.org/eunjeon/mecab-ko-dic)
+In Linux:
 
-`mecab-ko-dic`이 `/usr/local/lib/mecab/dic/mecab-ko-dic`에 설치된 경우에만 정상 작동합니다. 추후 사전 설치 디렉토리를 환경 변수로 추가할 수 있도록 하겠습니다.
+```
+$ tar zxfv mecab-ko-XX.tar.gz
+$ cd mecab-ko-XX
+$ ./configure 
+$ make
+$ make check
+$ su
+# make install
+```
 
-```r
-# install.packages("devtools")
+After the installation of `mecab-ko`, You can install RmecabKo from github with:
+
+```
+install.package("RmecabKo")
+# or, install.packages("devtools")
 devtools::install_github("junhewk/RmecabKo")
 ```
 
-#### Windows
+You need to install `mecab-ko-dic`, refer to [Bitbucket page](https://bitbucket.org/eunjeon/mecab-ko-dic). The installation procedure is same as `mecab-ko`.
 
-`install_mecab()`을 통해 `mecab-ko` binary를 설치합니다.
+### Windows
 
-```r
-# install.packages("devtools")
+In Windows, `install_mecab` function is provided.
+
+```
+install.package("RmecabKo")
+# or, install.packages("devtools")
 devtools::install_github("junhewk/RmecabKo")
 install_mecab()
 ```
 
-### Example
 
-`pos`, `nouns` 함수를 제공합니다. 두 함수 모두 **문자열 벡터**를 입력값으로 받습니다. (0.1판의 리스트에서 변경하였습니다. 혼동을 드려 죄송합니다.)
+## Example
 
-* `pos`는 문장 전체의 형태소 태깅을 제공합니다.
-* `nouns`는 명사만 추출하여 제공합니다.
+Basic usage of the provided functions is to put character vector in `phrase` parameter of `pos(phrase)` and `nouns(phrase)`. Loop between phrases are operated in the C++ binary, thus you can analyze many phrases quickly.
 
-```r
-> library(RmecabKo)
-> pos("안녕하세요.")
-$안녕하세요.
-[1] "안녕/NNG"   "하/XSV"     "세요/EP+EF" "./SF"      
-
-> pos(c("안녕하세요.", "은전한닢 프로젝트 R wrapper입니다."))
-$안녕하세요.
-[1] "안녕/NNG"   "하/XSV"     "세요/EP+EF" "./SF"      
-
-$`은전한닢 프로젝트 R wrapper입니다.`
-[1] "은전한닢/NNG+NR+NNG" "프로젝트/NNG"        "R/SL"                "wrapper/SL"         
-[5] "입니다/VCP+EF"       "./SF"               
-
-> nouns("안녕하세요.")
-$안녕하세요.
-[1] "안녕"
-
-> nouns(c("안녕하세요.", "은전한닢 프로젝트 R wrapper입니다."))
-$안녕하세요.
-[1] "안녕"
-
-$`은전한닢 프로젝트 R wrapper입니다.`
-[1] "은전한닢" "프로젝트"
-              
+```
+pos("Hello. This is R wrapper of Korean morpheme analyzer mecab-ko.")
 ```
 
-### Version History
+Output of the `pos` is list. Each element of the list contains classified morpheme and inferred part-of-speech (POS), separated by "/". The name of the element is the original phrase.
 
-* 0.1: First draft, `pos(list)`
-* 0.1.5: Windows support, add `nouns` function, `pos(character)`
-* 0.1.6: Add `install_mecab` function, add utils function group.
+Output of the `nouns` is also list. Each element of the list contains extracted nouns. The name of the element is the original phrase.
 
-### Author
+More examples will be provided on [Github wiki](https://github.com/junhewk/RmecabKo/wiki).
 
-김준혁 (junhewk.kim@gmail.com)
 
-문의사항은 Issues에 올려주시면 감사하겠습니다.
+## Author
 
-### Thanks to and Contributors
+Junhewk Kim (junhewk.kim@gmail.com)
 
-* [은전한닢 프로젝트(이용운, 유영호)](http://eunjeon.blogspot.com/): `mecab` 한국어 fork 
-* [윤원섭](www.github.com/Pusnow): `mecab-ko-msvc`, `mecab-ko-dic-msvc` VC++ 빌드
 
-### TODO
+## Thanks to and Contributor
 
-1. <del>윈도우에서 구동 (`mecab-ko-msvc`): 제가 윈도우를 설치하지 않아 테스트를 하기가 어렵습니다. 도와주실 분을 찾습니다.</del>
-2. 사전 설치 디렉트로 환경 변수로 옮기고 수정할 수 있도록 변경
-3. 자료형 추가
-4. <del>`mecab-ko-msvc`, `mecab-ko-dic-msvc` 설치 스크립트 제공 (Windows)</del>
-5. `mecab-ko`, `mecab-ko-dic` 설치 스크립트 제공 (Mac OSX, Linux)
-6. User Dictionary 함수 추가
-
-### License
-
-GPL (>= 2)
-
+* [Eunjeon project](http://eunjeon.blogspot.com/): Fork Japanese morpheme analyzer `mecab` to Korean version
+* [Wonsup Yoon](www.github.com/Pusnow): VC++ binary build of `mecab-ko-msvc`, `mecab-ko-dic-msvc`.

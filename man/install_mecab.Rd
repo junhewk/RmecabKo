@@ -4,10 +4,13 @@
 \alias{install_mecab}
 \title{Install mecab-ko-msvc and mecab-ko-dic-msvc}
 \usage{
-install_mecab()
+install_mecab(mecabLocation)
+}
+\arguments{
+\item{mecabLocation}{a directory to install Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC.}
 }
 \value{
-None. The function will halt when the current operation system is not Windows, or C:/mecab/mecab.exe exists.
+None. The function will halt when the current operation system is not Windows, or /mecabLocation/mecab.exe exists.
 
 See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
 }
@@ -15,11 +18,11 @@ See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
 \code{install_mecab} installs Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC.
 }
 \details{
-This code checks and installs Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC in \code{C:/mecab}. Windows only.
+This code checks and installs Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC in user specified directory. Windows only.
 }
 \examples{
 \dontrun{
-install_mecab()
+install_mecab("D:/Rlibs/mecab")
 }
 
 }

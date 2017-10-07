@@ -13,12 +13,6 @@
 
 #endif
 
-#define CHECK(eval) if (! eval) { \
-const char *e = tagger ? tagger->what() : MeCab::getTaggerError();\
-std::cerr << "Exception:" << e << std::endl;\
-delete tagger;\
-return R_NilValue; }
-
 using namespace Rcpp;
 
 // [[Rcpp::export]]
@@ -33,7 +27,10 @@ return R_NilValue;
   const char * dicpath = as<const char *>(dic);
 
   MeCab::Tagger *tagger = MeCab::createTagger(dicpath);
-  CHECK(tagger);
+  if (!tagger) {
+    const char *e = tagger ? tagger->what() : MeCab::getTaggerError();
+    stop(e);
+  }
 
   // Gets Node object.
   Rcpp::List tagged_list;
@@ -41,7 +38,10 @@ return R_NilValue;
   for (int i = 0; i < phrase.size(); i++) {
     std::string text = Rcpp::as<std::string>(phrase(i));
     const MeCab::Node* node = tagger->parseToNode(text.c_str());
-    CHECK(node);
+    if (!node) {
+      const char *e = tagger ? tagger->what() : MeCab::getTaggerError();
+      stop(e);
+    }
 
     Rcpp::CharacterVector tagged;
 

@@ -1,13 +1,13 @@
 Package: RmecabKo
 Type: Package
-Title: Rcpp Wrapper for Eunjeon Project
+Title: An 'Rcpp' Interface for Eunjeon Project
 Version: 0.1.6
 Author: Junhewk Kim
 Maintainer: Junhewk Kim <junhewk.kim@gmail.com>
-Description: Rcpp Wrapper for Eunjeon Project
+Description: An 'Rcpp' interface for Eunjeon project <http://eunjeon.blogspot.com/>.
     The 'mecab-ko' and 'mecab-ko-dic' is based on a C++ library,
-    and POS tagging with them is useful when the spacing of source text is not correct.
-    For integrating mecab-ko with R, Rcpp package is used for providing the basic framework.
+    and part-of-speech tagging with them is useful when the spacing of source Korean text is not correct.
+    This package provides part-of-speech tagging and tokenization function for Korean text.
 Imports: Rcpp
 LinkingTo: Rcpp
 License: GPL (>= 2)

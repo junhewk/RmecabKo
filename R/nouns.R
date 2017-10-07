@@ -31,7 +31,7 @@ nouns <- function(phrase) {
     if(dir.exists(dicpath)) {
       dicpath <- paste0("-d ", dicpath)
     } else {
-      stop(paste0("Mecab-ko-dic is not found on ", dirpath, ". Please check https://bitbucket.org/eunjeon/mecab-ko-dic."))
+      stop(paste0("Mecab-ko-dic is not found on ", dicpath, ". Please check https://bitbucket.org/eunjeon/mecab-ko-dic."))
     }
 
     # Rcpp function to tagging
@@ -43,13 +43,16 @@ nouns <- function(phrase) {
       stop("Mecab binary is not installed in C:\\mecab. Please run install_mecab().")
     }
 
+    mecabLibs <- getOption("mecab.libpath")
+    
     # loading /inst/mecab/mecab.exe (mecab-ko-msvc) with system.file and system
-    mecabKo <- shortPathName(file.path("C:/mecab", "mecab.exe"))
+    mecabKo <- utils::shortPathName(file.path(mecabLibs, "mecab.exe"))
+    mecabKoRc <- utils::shortPathName(file.path(mecabLibs, "mecabrc"))
     # mecabKoDic root in not working
-    mecabKoDic <- shortPathName(file.path("C:/mecab", "mecab-ko-dic"))
+    mecabKoDic <- utils::shortPathName(file.path(mecabLibs, "mecab-ko-dic"))
     
     # saving phrase to UTF-8 txt file
-    phraseFile <- shortPathName(tempfile())
+    phraseFile <- utils::shortPathName(tempfile())
 
     con <- file(phraseFile, "a")
     tryCatch({
@@ -59,9 +62,9 @@ nouns <- function(phrase) {
       close(con)
     })
 
-    outputFile <- shortPathName(tempfile())
+    outputFile <- utils::shortPathName(tempfile())
     
-    mecabOption <- c("-d", mecabKoDic, "-o", outputFile, phraseFile)
+    mecabOption <- c("-r", mecabKoRc, "-d", mecabKoDic, "-o", outputFile, phraseFile)
     
     # run mecab.exe
     system2(mecabKo, mecabOption)
