@@ -37,8 +37,7 @@ $ su
 After the installation of `mecab-ko`, You can install RmecabKo from github with:
 
 ```
-install.package("RmecabKo")
-# or, install.packages("devtools")
+# install.packages("devtools")
 devtools::install_github("junhewk/RmecabKo")
 ```
 
@@ -49,8 +48,7 @@ You need to install `mecab-ko-dic`, refer to [Bitbucket page](https://bitbucket.
 In Windows, `install_mecab` function is provided.
 
 ```
-install.package("RmecabKo")
-# or, install.packages("devtools")
+# install.packages("devtools")
 devtools::install_github("junhewk/RmecabKo")
 install_mecab()
 ```
