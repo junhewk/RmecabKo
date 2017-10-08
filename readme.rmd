@@ -97,7 +97,7 @@ nouns(c("안녕하세요.", "은전한닢 프로젝트 R wrapper입니다."))
 ## Thanks to and Contributor
 
 * [은전한닢 프로젝트(이용운, 유영호)](http://eunjeon.blogspot.com/): `mecab` 한국어 fork 
-* [윤원섭](www.github.com/Pusnow): `mecab-ko-msvc`, `mecab-ko-dic-msvc` VC++ 빌드
+* [윤원섭](https://www.github.com/Pusnow): `mecab-ko-msvc`, `mecab-ko-dic-msvc` VC++ 빌드
 
 
 ### TODO

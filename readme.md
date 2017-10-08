@@ -47,13 +47,13 @@ You need to install `mecab-ko-dic`, refer to [Bitbucket page](https://bitbucket.
 
 ### Windows
 
-In Windows, `install_mecab` function is provided.
+In Windows, `install_mecab` function is provided. You need to specify the installation path of the `mecab-ko` and `meccab-ko-dic` in the function parameter, `mecabLocation`.
 
 ```
 install.packages("RmecabKo")
 # install.packages("devtools")
 devtools::install_github("junhewk/RmecabKo")
-install_mecab()
+install_mecab("D:/Rlibs/mecab")
 ```
 
 
@@ -80,4 +80,4 @@ Junhewk Kim (junhewk.kim@gmail.com)
 ## Thanks to and Contributor
 
 * [Eunjeon project](http://eunjeon.blogspot.com/): Fork Japanese morpheme analyzer `mecab` to Korean version
-* [Wonsup Yoon](www.github.com/Pusnow): VC++ binary build of `mecab-ko-msvc`, `mecab-ko-dic-msvc`.
+* [Wonsup Yoon](https://www.github.com/Pusnow): VC++ binary build of `mecab-ko-msvc`, `mecab-ko-dic-msvc`.
