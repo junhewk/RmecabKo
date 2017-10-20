@@ -1,7 +1,11 @@
+# RmecabKo 0.1.6.1
+
+* Add `install_dic` function to install `mecab-ko-dic`. It is needed to use custom dictionary functionality.
+
 # RmecabKo 0.1.6
 
 * Remove `mecab-ko-msvc` binary build from the package
-* Add `install_mecab` function to install `mecab-ko-msvc` and `mecab-ko-dic-msvc` in proper directory (C:/mecab)
+* Add `install_mecab` function to install `mecab-ko-msvc` and `mecab-ko-dic-msvc` in user setting directory.
 * Fix cpp function to assert errors correctly
 * Rearrange documents with `Roxygen2`
 
