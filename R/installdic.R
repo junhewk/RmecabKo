@@ -24,7 +24,7 @@ install_dic <- function() {
   mecabDicCurrentDir <- "mecab-ko-dic-2.0.3-20170922"
   
   # verify os
-  if (!is_linux() | !is_osx()) {
+  if (is_linux() | is_osx()) {
     stop("Unable to install Mecab-Ko-Dic on this platform. ",
          "Building Mecab-Ko-Dic is possible only in Linux or Mac OSX")
   }
