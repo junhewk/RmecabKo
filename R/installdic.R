@@ -52,9 +52,9 @@ install_dic <- function() {
   if (is_linux()) {
     script <- paste0("cd ", mecabDicInst, "; ./configure; make; su; make install;")
   } else {
-    script <- paste0("cd ", mecabDicInst, "; ./autogen.sh; ./configure; make; sudo make install;")
+    script <- paste0("cd ", mecabDicInst, "; ./autogen.sh; ./configure; make; sudo -kS make install")
   }
   
   # The script will preserve the source file for custom dictonary building.
-  system(script)
+  system(script, input = readline("Enter your password: "))
 }
