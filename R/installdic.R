@@ -49,7 +49,7 @@ install_dic <- function() {
   
   suppressWarnings(file.remove(mecabKoDicFile))
   
-  if (is_linux) {
+  if (is_linux()) {
     script <- paste0("cd ", mecabDicInst, "; ./configure; make; su; make install;")
   } else {
     script <- paste0("cd ", mecabDicInst, "; ./autogen.sh; ./configure; make; sudo make install;")
