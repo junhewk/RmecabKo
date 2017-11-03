@@ -1,7 +1,7 @@
 Package: RmecabKo
 Type: Package
 Title: An 'Rcpp' Interface for Eunjeon Project
-Version: 0.1.6
+Version: 0.1.6.1
 Author: Junhewk Kim
 Maintainer: Junhewk Kim <junhewk.kim@gmail.com>
 Description: An 'Rcpp' interface for Eunjeon project <http://eunjeon.blogspot.com/>.
@@ -12,3 +12,4 @@ Imports: Rcpp
 LinkingTo: Rcpp
 License: GPL (>= 2)
 RoxygenNote: 6.0.1
+LazyData: true

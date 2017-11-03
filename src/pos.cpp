@@ -16,7 +16,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List posRcpp(const CharacterVector & phrase, const CharacterVector & dic){
+List posRcpp(const CharacterVector & phrase, const CharacterVector & dic, const LogicalVector & join){
 
 #ifdef OS_Windows
   
@@ -45,7 +45,7 @@ List posRcpp(const CharacterVector & phrase, const CharacterVector & dic){
     }
 
     Rcpp::CharacterVector tagged;
-
+    
     for (; node; node = node->next) {
       if (node->stat == MECAB_BOS_NODE)
         ;
@@ -53,10 +53,17 @@ List posRcpp(const CharacterVector & phrase, const CharacterVector & dic){
         ;
       else {
         std::string f = node->feature;
-        tagged.push_back(std::string (node->surface).substr(0, node->length) + "/" + f.substr(0, f.find(",")));
+        if (join[0]) {
+          tagged.push_back(std::string (node->surface).substr(0, node->length) + "/" + f.substr(0, f.find(",")));  
+        } else {
+          tagged.push_back(std::string (node->surface).substr(0, node->length), f.substr(0, f.find(",")));  
+        }
+        
       }
     }
+    
     tagged_list.push_back(tagged);
+    
   }
 
   delete tagger;

@@ -43,7 +43,7 @@ install.packages("RmecabKo")
 devtools::install_github("junhewk/RmecabKo")
 ```
 
-You need to install `mecab-ko-dic` also. *`install_dic` function is now working on.* (In Github version, `install_dic` function is added to support this functionality. You can install `mecab-ko-dic` with `install_dic()`. I'm working with custom dictionary function, for it `mecab-ko-dic` has to be installed by this function.) Otherwise, refer to [Bitbucket page](https://bitbucket.org/eunjeon/mecab-ko-dic). The installation procedure is same as `mecab-ko`.
+You need to install `mecab-ko-dic` also. (In Github version, `install_dic` function is added to support this functionality. You can install `mecab-ko-dic` with `install_dic()`. I'm working with custom dictionary function, for it `mecab-ko-dic` has to be installed by this function.) Otherwise, refer to [Bitbucket page](https://bitbucket.org/eunjeon/mecab-ko-dic). The installation procedure is same as `mecab-ko`.
 
 ### Windows
 
@@ -68,6 +68,10 @@ pos("Hello. This is R wrapper of Korean morpheme analyzer mecab-ko.")
 Output of the `pos` is list. Each element of the list contains classified morpheme and inferred part-of-speech (POS), separated by "/". The name of the element is the original phrase.
 
 Output of the `nouns` is also list. Each element of the list contains extracted nouns. The name of the element is the original phrase.
+
+`tokenizer` functions are added. You can use `tokens_morph`, `tokens_words`, `tokens_nouns`, and `tokens_ngram`. Please refer to the help page of each function.
+
+`stopwords_ko` data frame is added. It contains Korean stop morphemes, based on the scraped sentences. The list of the Korean stop words will be updated continually.
 
 More examples will be provided on [Github wiki](https://github.com/junhewk/RmecabKo/wiki).
 

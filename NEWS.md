@@ -1,6 +1,8 @@
 # RmecabKo 0.1.6.1
 
 * Add `install_dic` function to install `mecab-ko-dic`. It is needed to use custom dictionary functionality.
+* Add tokenizers.
+* Add stopwords_ko database.
 
 # RmecabKo 0.1.6
 

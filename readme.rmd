@@ -54,7 +54,7 @@ install.packages("RmecabKo")
 devtools::install_github("junhewk/RmecabKo")
 ```
 
-*현재 수정중입니다. 곧 공개하도록 하겠습니다.* 한국어 문장 분석을 위해서는 `mecab-ko-dic` 또한 설치해야 합니다. `mecab-ko-dic` 설치를 위한 `install_dic` 함수를 추가했습니다(현재 Github version에만 적용). 현재 사용자 사전 기능 추가를 위해 작업 중이며, 사용사 사전을 사용하기 위해서는 `mecab-ko-dic` source를 `make`를 통해 build 해놓아야 합니다. `install_dic`은 package directory에 `mecab-ko-dic` 최신 버전을 받아 시스템에 설치하며, 이전의 `mecab-ko-dic`은 삭제합니다. 추후 Windows 10 Linux subsystem에서도 동일하게 작동할 수 있도록 확장할 예정입니다.
+한국어 문장 분석을 위해서는 `mecab-ko-dic` 또한 설치해야 합니다. `mecab-ko-dic` 설치를 위한 `install_dic` 함수를 추가했습니다(현재 Github version에만 적용). 현재 사용자 사전 기능 추가를 위해 작업 중이며, 사용사 사전을 사용하기 위해서는 `mecab-ko-dic` source를 `make`를 통해 build 해놓아야 합니다. `install_dic`은 package directory에 `mecab-ko-dic` 최신 버전을 받아 시스템에 설치하며, 이전의 `mecab-ko-dic`은 삭제합니다. 추후 Windows 10 Linux subsystem에서도 동일하게 작동할 수 있도록 확장할 예정입니다.
 
 ### Windows
 
@@ -75,8 +75,13 @@ install_mecab("D:/Rlibs/mecab")
 
 `pos`, `nouns` 함수를 제공합니다. 두 함수 모두 **문자열 벡터**를 입력값으로 받습니다. (0.1판의 리스트에서 변경하였습니다. 혼동을 드려 죄송합니다.)
 
+tokenizers 함수를 추가했습니다. `token_morph`, `token_words`, `token_nouns`, `token_ngrams`의 네 가지 함수를 제공합니다. tidy data analysis를 위해, `tidytext`의 `unnest_tokens` 함수와 함께 사용할 수 있도록 결과를 리스트 형태로 반환합니다.
+
+`stopwords_ko` 자료를 추가했습니다. 전체 형태소 추출 시 불용어를 제외할 때 사용할 수 있습니다. 현재 작업중으로, 단어 목록을 계속 추가해 나갈 예정입니다. 또한, 사용자 불용어를 쉽게 추가할 수 있도록 함수 형태로 전환할 예정입니다. 현재는 `stopwords_ko`로 불러올 수 있습니다.
+
 * `pos`는 문장 전체의 형태소 태깅을 제공합니다.
 * `nouns`는 명사만 추출하여 제공합니다.
+* tokenizers는 형태소 전체, 실질형태소, 명사형의 형태소 토큰과 이 토큰의 n-gram 형태를 제공합니다.
 
 ```{r example}
 library(RmecabKo)
@@ -84,6 +89,22 @@ pos("안녕하세요.")
 pos(c("안녕하세요.", "은전한닢 프로젝트 R wrapper입니다."))
 nouns("안녕하세요.")
 nouns(c("안녕하세요.", "은전한닢 프로젝트 R wrapper입니다."))
+
+txt <- c("안녕하세요.", "은전한닢 프로젝트 R wrapper입니다.")
+
+token_words(txt)
+token_ngrams(txt, n = 2L)
+
+library(tidyverse)
+library(tidytext)
+
+df <- data_frame(txt = c("안녕하세요.", "은전한닢 프로젝트 R wrapper입니다."))
+df %>% 
+  unnest_tokens(word, txt, tokens = token_morph) %>% # 전체 형태소 추출
+  anti_join(stopwords_ko) # 불용어 제외
+
+df %>% 
+  unnest_tokens(word, txt, tokens = token_ngrams, n = 2L)
 ```
 
 [Github wiki](https://github.com/junhewk/RmecabKo/wiki)를 단장 중에 있습니다. 분석 사례와 적용 방법을 추가할 예정입니다.
@@ -108,7 +129,7 @@ nouns(c("안녕하세요.", "은전한닢 프로젝트 R wrapper입니다."))
 4. <del>`mecab-ko-msvc`, `mecab-ko-dic-msvc` 설치 스크립트 제공 (Windows)</del>
 5. <del>`mecab-ko-dic` 설치 스크립트 제공 (Mac OSX, Linux)</del>
 6. User Dictionary 함수 추가
-7. 다른 패키지 호환 함수 제공 (예, `tidytext` tokenizer 등)
+7. <del>다른 패키지 호환 함수 제공 (예, `tidytext` tokenizer 등)</del>
 
 
 ### License

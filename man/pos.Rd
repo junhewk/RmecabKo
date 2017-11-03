@@ -4,13 +4,15 @@
 \alias{pos}
 \title{POS tagging by mecab-ko}
 \usage{
-pos(phrase)
+pos(phrase, join = TRUE)
 }
 \arguments{
 \item{phrase}{Character vector.}
+
+\item{join}{Boolean.}
 }
 \value{
-List of POS tagged morpheme will be returned. Element name of the list are original phrases.
+List of POS tagged morpheme will be returned in conjoined character vecter form. Element name of the list are original phrases. If \code{join=FALSE}, it returns list of morpheme with named with tags.
 
 See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
 }
@@ -23,6 +25,7 @@ This is a basic function of part-of-speech tagging by mecab-ko.
 \examples{
 \dontrun{
 pos(c("Some Korean Phrases"))
+pos(c("Some Korean Phrases"), join=FALSE)
 }
 
 }

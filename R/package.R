@@ -34,10 +34,16 @@
 #' # On Windows platform only
 #' install_mecab("D:/Rlibs/mecab")
 #' 
+#' phrase <- # Some Korean character vectors
+#' 
 #' # For full POS tagging
 #' pos(phrase)
 #' # For noun extraction only
 #' nouns(phrase)
+#' # For tokenizing of selective morphemes
+#' tokens_words(phrase)
+#' # For n-grams tokenizing
+#' tokens_ngram(phrase)
 #' }
 #' 
 #' @keywords Korean tagger nlp

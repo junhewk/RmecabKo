@@ -8,18 +8,19 @@
 #' This is a basic function of part-of-speech tagging by mecab-ko.
 #'
 #' @param phrase Character vector.
-#' @return List of POS tagged morpheme will be returned. Element name of the list are original phrases.
+#' @param join Boolean.
+#' @return List of POS tagged morpheme will be returned in conjoined character vecter form. Element name of the list are original phrases. If \code{join=FALSE}, it returns list of morpheme with named with tags.
 #'
 #' See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
 #' 
 #' @examples 
 #' \dontrun{
 #' pos(c("Some Korean Phrases"))
+#' pos(c("Some Korean Phrases"), join=FALSE)
 #' }
 #' 
 #' @export
-
-pos <- function(phrase) {
+pos <- function(phrase, join=TRUE) {
   if (typeof(phrase) != "character") {
     stop("'phrase' must be a character vector")
   }
@@ -35,7 +36,7 @@ pos <- function(phrase) {
 		}
 
 		# Rcpp function to tagging
-  	tagged <- posRcpp(phrase, dicpath)
+  	tagged <- posRcpp(phrase, dicpath, join)
 		
 	} else if(is_windows()) {
     
@@ -75,22 +76,32 @@ pos <- function(phrase) {
   	
   	i <- 1
   	tagged <- list()
-  	taggedLine <- c()
   	
     for(posLine in posResult) {
+      taggedLine <- c()
+      
       if(posLine=="EOS") {
+        
         if(is.null(taggedLine)) {
           length(tagged) <- i
         } else {
           tagged[[i]] <- taggedLine
         }
         i <- i + 1
-        taggedLine <- c()
       } else if(substring(posLine, 1, 1) == ",") {
-        taggedLine <- c(taggedLine, ",/SC")
+        if (join) {
+          taggedLine <- c(taggedLine, ",/SC")  
+        } else {
+          taggedLine["SC"] = ","
+        }
       } else {
         taggedElements <- strsplit(posLine, ",")
-        taggedLine <- c(taggedLine, gsub("\t", "/", taggedElements[[1]][1]))
+        if (join) {
+          taggedLine <- c(taggedLine, gsub("\t", "/", taggedElements[[1]][1]))
+        } else {
+          taggedMorpheme <- strsplit(taggedElements[[1]][1], "\t")
+          taggedLine[taggedMorpheme[[1]][2]] <- taggedMorpheme[[1]][1]
+        }
       }
     }
   	

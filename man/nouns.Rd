@@ -7,7 +7,7 @@
 nouns(phrase)
 }
 \arguments{
-\item{phrase}{Character vector.}
+\item{phrase}{A character vector or character vectors.}
 }
 \value{
 List of nouns will be returned. Element name of the list are original phrases.

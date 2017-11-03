@@ -2,7 +2,7 @@
 #'
 #' \code{install_dic} installs Mecab-Ko-Dic.
 #' 
-#' This code checks and installs Mecab-Ko-Dic in Linux and Mac OSX. This is essential for using custom-defined user dictionary.
+#' This code checks and installs Mecab-Ko-Dic in Linux and Mac OSX. This is essential for using custom-defined user dictionary. Installing Mecab-Ko-Dic needs system previleges, because it uses `make install` to build from source and install it to system.
 #' 
 #' @usage install_dic()
 #' 
@@ -17,7 +17,6 @@
 #' 
 #' @importFrom utils download.file untar
 #' @export
-
 install_dic <- function() {
   
   mecabDicCurrentVer <- "https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.0.3-20170922.tar.gz"
@@ -50,11 +49,25 @@ install_dic <- function() {
   suppressWarnings(file.remove(mecabKoDicFile))
   
   if (is_linux()) {
-    script <- paste0("cd ", mecabDicInst, "; ./configure; make; su; make install;")
+    script <- paste0("#!/bin/sh
+                     cd ", mecabDicInst, "
+                     ./configure
+                     make
+                     gksudo make install;")
+    system2("/bin/bash", args = c("-c", shQuote(script)))
   } else {
-    script <- paste0("cd ", mecabDicInst, "; ./autogen.sh; ./configure; make; sudo -kS make install")
+    script_make <- paste0("#!/bin/sh
+      cd ", mecabDicInst, "
+      ./configure
+      make")
+    system2("/bin/bash", args = c("-c", shQuote(script_make)))
+    script_install <- paste0("/usr/bin/osascript -e 'do shell script \"/bin/bash -s <<'EOF'
+      cd ", mecabDicInst, " 
+      make install
+      \" with administrator privileges'")
+    system2("/bin/bash", args = c("-c", shQuote(script_install)))
   }
   
   # The script will preserve the source file for custom dictonary building.
-  system(script, input = readline("Enter your password: "))
+  
 }
