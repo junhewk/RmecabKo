@@ -29,11 +29,11 @@
 token_ngrams <- function(x, n = 3L, div = "words", stopwords = character(), ngram_delim = " ") {
   if (div %in% c("morph", "words", "nouns")) {
     tf <- get(paste0("token_", div))
-    tokenfunc <- function(col) tf(col)
+    tokenfunc <- function(col) tf(col, strip_punct = TRUE, strip_numeric = TRUE)
   } else {
     stop("Cannot tokenize with custom functions. token_ngrams can accept 'morph', 'words', and 'nouns' for the tokens parameter only.")
   }
-  words <- tokenfunc(x, strip_punct = TRUE, strip_numeric = TRUE)
+  words <- tokenfunc(x)
   # ret <- generate_ngrams_batch(words, ngram_min = n_min, ngram_max = n, ngram_delim)
   ret <- simple_ngrams(words, n = n, stopwords = stopwords, ngram_delim = ngram_delim)
   ret
