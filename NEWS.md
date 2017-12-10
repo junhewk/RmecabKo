@@ -1,3 +1,8 @@
+# RmecabKo 0.1.6.1.1
+
+* Fix `install_mecab` to support creating subdirectory
+* Fix `pos` to check local encoding, and if `CP949` is base system encoding then convert output encoding as `CP949`. 
+
 # RmecabKo 0.1.6.1
 
 * Add `install_dic` function to install `mecab-ko-dic`. It is needed to use custom dictionary functionality.

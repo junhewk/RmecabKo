@@ -36,7 +36,7 @@ install_mecab <- function(mecabLocation) {
     stop("Please speficy the path to install Mecab-Ko library.")
   }
   
-  mecabLocCreated <- dir.create(mecabLocation, showWarnings = FALSE)
+  mecabLocCreated <- dir.create(mecabLocation, recursive = TRUE, showWarnings = FALSE)
   
   if (!mecabLocCreated) {
     stop(paste("Unable to make a new directory to", mecabLocation, sep = " "))

@@ -97,6 +97,11 @@ nouns <- function(phrase) {
     suppressWarnings(file.remove(outputFile))
   } 
   names(tagged) <- phrase
+  if (localeToCharset()[1] == "CP949") {
+    iconv(tagged, "UTF-8", "CP949")
+  } else {
+    Encoding(tagged) <- "UTF-8"
+  }
   return(tagged)
 }
 
@@ -199,5 +204,10 @@ words <- function(phrase) {
     suppressWarnings(file.remove(outputFile))
   } 
 
+  if (localeToCharset()[1] == "CP949") {
+    iconv(tagged, "UTF-8", "CP949")
+  } else {
+    Encoding(tagged) <- "UTF-8"
+  }
   return(tagged)
 }

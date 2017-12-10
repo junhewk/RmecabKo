@@ -38,7 +38,7 @@ check_input <- function(x) {
 }
 
 #'@export
-token_morph <- function(phrase, strip_punct = TRUE, strip_numeric = FALSE) {
+token_morph <- function(phrase, strip_punct = FALSE, strip_numeric = FALSE) {
   check_input(phrase)
   if (strip_punct) phrase <- stringr::str_replace_all(phrase, "[[:punct:]]", "")
   if (strip_numeric) phrase <- stringr::str_replace_all(phrase, "[[:digit:]]", "")
@@ -48,7 +48,7 @@ token_morph <- function(phrase, strip_punct = TRUE, strip_numeric = FALSE) {
 }
 
 #'@export
-token_words <- function(phrase, strip_punct = TRUE, strip_numeric = FALSE) {
+token_words <- function(phrase, strip_punct = FALSE, strip_numeric = FALSE) {
   check_input(phrase)
   if (strip_punct) phrase <- stringr::str_replace_all(phrase, "[[:punct:]]", "")
   if (strip_numeric) phrase <- stringr::str_replace_all(phrase, "[[:digit:]]", "")
@@ -57,7 +57,7 @@ token_words <- function(phrase, strip_punct = TRUE, strip_numeric = FALSE) {
 }
 
 #'@export
-token_nouns <- function(phrase, strip_punct = TRUE, strip_numeric = FALSE) {
+token_nouns <- function(phrase, strip_punct = FALSE, strip_numeric = FALSE) {
   check_input(phrase)
   if (strip_punct) phrase <- stringr::str_replace_all(phrase, "[[:punct:]]", "")
   if (strip_numeric) phrase <- stringr::str_replace_all(phrase, "[[:digit:]]", "")

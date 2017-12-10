@@ -20,7 +20,7 @@
 #' }
 #' 
 #' @export
-pos <- function(phrase, join=TRUE) {
+pos <- function(phrase, join = TRUE) {
   if (typeof(phrase) != "character") {
     stop("'phrase' must be a character vector")
   }
@@ -109,5 +109,10 @@ pos <- function(phrase, join=TRUE) {
   	suppressWarnings(file.remove(outputFile))
 	} 
   names(tagged) <- phrase
+  if (localeToCharset()[1] == "CP949") {
+    iconv(tagged, "UTF-8", "CP949")
+  } else {
+    Encoding(tagged) <- "UTF-8"
+  }
   return(tagged)
 }
