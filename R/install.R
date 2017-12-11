@@ -36,8 +36,28 @@ install_mecab <- function(mecabLocation) {
     stop("Please speficy the path to install Mecab-Ko library.")
   }
   
-  mecabLocCreated <- dir.create(mecabLocation, recursive = TRUE, showWarnings = FALSE)
+  dir.create(mecabLocation, recursive = TRUE, showWarnings = FALSE)
   
+  if (file.exists(file.path(mecabLocation, "mecab.exe"))) {
+    
+    mecabLibsLoc <- file.path(system.file(package = "RmecabKo"), "mecabLibs")
+    
+    if(!file.exists(mecabLibsLoc)) {
+      con <- file(mecabLibsLoc, "a")
+      
+      tryCatch({
+        cat(mecabLocation, file=con, sep="\n")
+      },
+      finally = {
+        close(con)
+      })
+    }
+    
+    options(list(mecab.libpath = mecabLocation))
+    
+    stop("Mecab is already installed in the location.")
+  }
+    
   #if (!mecabLocCreated) {
   #  stop(paste("Unable to create a new directory to", mecabLocation, sep = " "))
   #}

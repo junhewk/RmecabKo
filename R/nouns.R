@@ -87,6 +87,7 @@ nouns <- function(phrase) {
         taggedLine <- c()
       } else {
         taggedElements <- strsplit(posLine, "\t")
+        Encoding(taggedElements[[1]][1]) <- "UTF-8"
         if(substring(taggedElements[[1]][2], 1, 1) == "N") {
           taggedLine <- c(taggedLine, taggedElements[[1]][1])
         }
@@ -97,7 +98,6 @@ nouns <- function(phrase) {
     suppressWarnings(file.remove(outputFile))
   } 
   names(tagged) <- phrase
-  Encoding(tagged) <- "UTF-8"
   
   return(tagged)
 }
@@ -189,6 +189,7 @@ words <- function(phrase) {
         taggedLine <- c()
       } else {
         taggedElements <- strsplit(posLine, "\t")
+        Encoding(taggedElements[[1]][1]) <- "UTF-8"
         if (substring(taggedElements[[1]][2], 1, 1) %in% tagItem) {
           taggedLine <- c(taggedLine, taggedElements[[1]][1])
         } else if (substring(taggedElements[[1]][2], 1, 2) == "SL") {
@@ -201,7 +202,5 @@ words <- function(phrase) {
     suppressWarnings(file.remove(outputFile))
   } 
 
-  Encoding(tagged) <- "UTF-8"
-  
   return(tagged)
 }

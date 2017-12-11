@@ -96,6 +96,7 @@ pos <- function(phrase, join = TRUE) {
         }
       } else {
         taggedElements <- strsplit(posLine, ",")
+        Encoding(taggedElements[[1]][1]) <- "UTF-8"
         if (join) {
           taggedLine <- c(taggedLine, gsub("\t", "/", taggedElements[[1]][1]))
         } else {
@@ -109,6 +110,6 @@ pos <- function(phrase, join = TRUE) {
   	suppressWarnings(file.remove(outputFile))
 	} 
   names(tagged) <- phrase
-  Encoding(tagged) <- "UTF-8"
+  
   return(tagged)
 }
