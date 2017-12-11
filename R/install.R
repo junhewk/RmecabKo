@@ -38,9 +38,9 @@ install_mecab <- function(mecabLocation) {
   
   mecabLocCreated <- dir.create(mecabLocation, recursive = TRUE, showWarnings = FALSE)
   
-  if (!mecabLocCreated) {
-    stop(paste("Unable to make a new directory to", mecabLocation, sep = " "))
-  }
+  #if (!mecabLocCreated) {
+  #  stop(paste("Unable to create a new directory to", mecabLocation, sep = " "))
+  #}
   
   # verify 64-bit
   # mecab-ko-msvc: https://github.com/Pusnow/mecab-ko-msvc

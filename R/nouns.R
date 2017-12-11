@@ -55,7 +55,7 @@ nouns <- function(phrase) {
 
     con <- file(phraseFile, "a")
     tryCatch({
-      cat(iconv(phrase, from = localeToCharSet()[1], to = "UTF-8"), file=con, sep="\n")
+      cat(iconv(phrase, from = localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
     },
     finally = {
       close(con)
@@ -156,7 +156,7 @@ words <- function(phrase) {
     
     con <- file(phraseFile, "a")
     tryCatch({
-      cat(iconv(phrase, from = localeToCharSet()[1], to = "UTF-8"), file=con, sep="\n")
+      cat(iconv(phrase, from = localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
     },
     finally = {
       close(con)
