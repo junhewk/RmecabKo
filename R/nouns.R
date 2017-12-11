@@ -55,7 +55,7 @@ nouns <- function(phrase) {
 
     con <- file(phraseFile, "a")
     tryCatch({
-      cat(iconv(phrase, to="UTF-8"), file=con, sep="\n")
+      cat(iconv(phrase, from = localeToCharSet()[1], to = "UTF-8"), file=con, sep="\n")
     },
     finally = {
       close(con)
@@ -97,11 +97,8 @@ nouns <- function(phrase) {
     suppressWarnings(file.remove(outputFile))
   } 
   names(tagged) <- phrase
-  if (localeToCharset()[1] == "CP949") {
-    iconv(tagged, "UTF-8", "CP949")
-  } else {
-    Encoding(tagged) <- "UTF-8"
-  }
+  Encoding(tagged) <- "UTF-8"
+  
   return(tagged)
 }
 
@@ -159,7 +156,7 @@ words <- function(phrase) {
     
     con <- file(phraseFile, "a")
     tryCatch({
-      cat(iconv(phrase, to="UTF-8"), file=con, sep="\n")
+      cat(iconv(phrase, from = localeToCharSet()[1], to = "UTF-8"), file=con, sep="\n")
     },
     finally = {
       close(con)
@@ -204,10 +201,7 @@ words <- function(phrase) {
     suppressWarnings(file.remove(outputFile))
   } 
 
-  if (localeToCharset()[1] == "CP949") {
-    iconv(tagged, "UTF-8", "CP949")
-  } else {
-    Encoding(tagged) <- "UTF-8"
-  }
+  Encoding(tagged) <- "UTF-8"
+  
   return(tagged)
 }

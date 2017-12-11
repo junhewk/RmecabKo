@@ -56,13 +56,13 @@ pos <- function(phrase, join = TRUE) {
 		phraseFile <- utils::shortPathName(tempfile())
 
 		con <- file(phraseFile, "a")
-  	tryCatch({
-    	cat(iconv(phrase, to="UTF-8"), file=con, sep="\n")
-  	},
-  	finally = {
-    	close(con)
-  	})
-
+		tryCatch({
+		  cat(iconv(phrase, from = localeToCharSet()[1], to = "UTF-8"), file=con, sep="\n")
+		},
+		finally = {
+		  close(con)
+		})
+		
   	outputFile <- utils::shortPathName(tempfile())
   	
   	mecabOption <- c("-r", mecabKoRc, "-d", mecabKoDic, "-o", outputFile, phraseFile)
@@ -109,10 +109,6 @@ pos <- function(phrase, join = TRUE) {
   	suppressWarnings(file.remove(outputFile))
 	} 
   names(tagged) <- phrase
-  if (localeToCharset()[1] == "CP949") {
-    iconv(tagged, "UTF-8", "CP949")
-  } else {
-    Encoding(tagged) <- "UTF-8"
-  }
+  Encoding(tagged) <- "UTF-8"
   return(tagged)
 }

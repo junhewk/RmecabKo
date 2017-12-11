@@ -1,7 +1,7 @@
 # RmecabKo 0.1.6.1.1
 
 * Fix `install_mecab` to support creating subdirectory
-* Fix `pos` to check local encoding, and if `CP949` is base system encoding then convert output encoding as `CP949`. 
+* Fix `pos` and other token functions to check local encoding.
 
 # RmecabKo 0.1.6.1
 
