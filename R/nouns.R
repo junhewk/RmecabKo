@@ -53,7 +53,7 @@ nouns <- function(phrase) {
     # saving phrase to UTF-8 txt file
     phraseFile <- utils::shortPathName(tempfile())
 
-    con <- file(phraseFile, "a")
+    con <- file(phraseFile, "a", encoding = "UTF-8")
     tryCatch({
       cat(iconv(phrase, from = localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
     },
@@ -74,23 +74,21 @@ nouns <- function(phrase) {
     
     i <- 1
     tagged <- list()
-    taggedLine <- c()
+    length(tagged) <- i
     
-    for(posLine in posResult) {
-      if(posLine=="EOS") {
-        if(is.null(taggedLine)) {
-          length(tagged) <- i
-        } else {
-          tagged[[i]] <- taggedLine
-        }
+    for (line in seq(1, length(posResult), 1)) {
+      
+      taggedLine <- c()
+      
+      if (posResult[line] == "EOS") {
         i <- i + 1
-        taggedLine <- c()
+        if (line != length(posResult)) length(tagged) <- i
       } else {
-        taggedElements <- strsplit(posLine, "\t")
-        Encoding(taggedElements[[1]][1]) <- "UTF-8"
+        taggedElements <- strsplit(posResult[line], "\t")
         if(substring(taggedElements[[1]][2], 1, 1) == "N") {
           taggedLine <- c(taggedLine, taggedElements[[1]][1])
         }
+        tagged[[i]] <- c(tagged[[i]], taggedLine)
       }
     }
     
@@ -154,7 +152,7 @@ words <- function(phrase) {
     # saving phrase to UTF-8 txt file
     phraseFile <- utils::shortPathName(tempfile())
     
-    con <- file(phraseFile, "a")
+    con <- file(phraseFile, "a", encoding = "UTF-8")
     tryCatch({
       cat(iconv(phrase, from = localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
     },
@@ -175,26 +173,23 @@ words <- function(phrase) {
     
     i <- 1
     tagged <- list()
-    taggedLine <- c()
     tagItem <- c("N", "V", "M", "I")
     
-    for(posLine in posResult) {
-      if(posLine=="EOS") {
-        if(is.null(taggedLine)) {
-          length(tagged) <- i
-        } else {
-          tagged[[i]] <- taggedLine
-        }
+    for (line in seq(1, length(posResult), 1)) {
+      
+      taggedLine <- c()
+      
+      if (posResult[line] == "EOS") {
         i <- i + 1
-        taggedLine <- c()
+        if (line != length(posResult)) length(tagged) <-i
       } else {
-        taggedElements <- strsplit(posLine, "\t")
-        Encoding(taggedElements[[1]][1]) <- "UTF-8"
+        taggedElements <- strsplit(posResult[line], "\t")
         if (substring(taggedElements[[1]][2], 1, 1) %in% tagItem) {
           taggedLine <- c(taggedLine, taggedElements[[1]][1])
         } else if (substring(taggedElements[[1]][2], 1, 2) == "SL") {
           taggedLine <- c(taggedLine, taggedElements[[1]][1])
         }
+        tagged[[i]] <- c(tagged[[i]], taggedLine)
       }
     }
     

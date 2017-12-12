@@ -55,7 +55,7 @@ pos <- function(phrase, join = TRUE) {
 		# saving phrase to UTF-8 txt file
 		phraseFile <- utils::shortPathName(tempfile())
 
-		con <- file(phraseFile, "a")
+		con <- file(phraseFile, "a", encoding = "UTF-8")
 		tryCatch({
 		  cat(iconv(phrase, from = localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
 		},
@@ -76,33 +76,30 @@ pos <- function(phrase, join = TRUE) {
   	
   	i <- 1
   	tagged <- list()
+  	length(tagged) <- i
   	
-    for(posLine in posResult) {
+    for(line in seq(1, length(posResult), 1)) {
+      
       taggedLine <- c()
       
-      if(posLine=="EOS") {
-        
-        if(is.null(taggedLine)) {
-          length(tagged) <- i
-        } else {
-          tagged[[i]] <- taggedLine
-        }
+      if(posResult[line] == "EOS") {
         i <- i + 1
-      } else if(substring(posLine, 1, 1) == ",") {
+        if (line != length(posResult)) length(tagged) <-  i
+      } else if(substring(posResult[line], 1, 1) == ",") {
         if (join) {
           taggedLine <- c(taggedLine, ",/SC")  
         } else {
           taggedLine["SC"] = ","
         }
       } else {
-        taggedElements <- strsplit(posLine, ",")
-        Encoding(taggedElements[[1]][1]) <- "UTF-8"
+        taggedElements <- strsplit(posResult[line], ",")
         if (join) {
           taggedLine <- c(taggedLine, gsub("\t", "/", taggedElements[[1]][1]))
         } else {
           taggedMorpheme <- strsplit(taggedElements[[1]][1], "\t")
           taggedLine[taggedMorpheme[[1]][2]] <- taggedMorpheme[[1]][1]
         }
+        tagged[[i]] <- c(tagged[[i]], taggedLine)
       }
     }
   	
