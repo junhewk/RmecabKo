@@ -70,7 +70,7 @@ devtools::install_github("junhewk/RmecabKo")
 install_mecab("D:/Rlibs/mecab")
 ```
 
-*김영우님 도움*으로 현재 Windows 상에서 구동 및 인코딩을 수정 중입니다. 먼저,
+*김영우님 도움*으로 windows 인코딩 문제를 해결했습니다. 감사합니다.
 
 * install_mecab() 함수가 subdirectory를 생성하지 못하던 것을 수정했습니다.
 * 한글 윈도우 인코딩에 맞춰서 출력할 수 있도록 현재 작업 중입니다. 일단, 시스템 인코딩이 `CP949` 인 경우, 자료를 `CP949`로 변환하여 출력하도록 수정했습니다.

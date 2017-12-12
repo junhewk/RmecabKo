@@ -56,6 +56,7 @@ devtools::install_github("junhewk/RmecabKo")
 install_mecab("D:/Rlibs/mecab")
 ```
 
+* 12/12/17. Encoding problem in Windows resolved (special thanks to Young Woo Kim).
 
 ## Example
 
