@@ -78,17 +78,14 @@ nouns <- function(phrase) {
     
     for (line in seq(1, length(posResult), 1)) {
       
-      taggedLine <- c()
-      
       if (posResult[line] == "EOS") {
         i <- i + 1
         if (line != length(posResult)) length(tagged) <- i
       } else {
         taggedElements <- strsplit(posResult[line], "\t")
         if(substring(taggedElements[[1]][2], 1, 1) == "N") {
-          taggedLine <- c(taggedLine, taggedElements[[1]][1])
+          tagged[[i]] <- c(tagged[[i]], taggedElements[[1]][1])
         }
-        tagged[[i]] <- c(tagged[[i]], taggedLine)
       }
     }
     
@@ -173,23 +170,20 @@ words <- function(phrase) {
     
     i <- 1
     tagged <- list()
+    length(tagged) <- i
     tagItem <- c("N", "V", "M", "I")
     
     for (line in seq(1, length(posResult), 1)) {
-      
-      taggedLine <- c()
-      
       if (posResult[line] == "EOS") {
         i <- i + 1
         if (line != length(posResult)) length(tagged) <-i
       } else {
         taggedElements <- strsplit(posResult[line], "\t")
         if (substring(taggedElements[[1]][2], 1, 1) %in% tagItem) {
-          taggedLine <- c(taggedLine, taggedElements[[1]][1])
+          tagged[[i]] <- c(tagged[[i]], taggedElements[[1]][1])
         } else if (substring(taggedElements[[1]][2], 1, 2) == "SL") {
-          taggedLine <- c(taggedLine, taggedElements[[1]][1])
+          tagged[[i]] <- c(tagged[[i]], taggedElements[[1]][1])
         }
-        tagged[[i]] <- c(tagged[[i]], taggedLine)
       }
     }
     

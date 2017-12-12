@@ -55,7 +55,7 @@ install_mecab <- function(mecabLocation) {
     
     options(list(mecab.libpath = mecabLocation))
     
-    stop("Mecab is already installed in the location.")
+    stop("Mecab is already installed in the location. The package will use the binary in this location.")
   }
     
   #if (!mecabLocCreated) {
