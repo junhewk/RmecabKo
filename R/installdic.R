@@ -16,7 +16,7 @@
 #' }
 #' 
 #' @importFrom utils download.file untar
-#' @export
+
 install_dic <- function() {
   
   mecabDicCurrentVer <- "https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.0.3-20170922.tar.gz"

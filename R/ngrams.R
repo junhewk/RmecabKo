@@ -11,7 +11,9 @@
 #'     will be tokenized separately. If \code{phrase} is a list of charactor vectors, each element
 #'     of the list should be a one-item vector.
 #' @param n The number of words in the n-gram. This must be an integer greater than or equal to 1.
+#' @param div The token generator definition. The options are "morph", "words", and "nouns".
 #' @param ngram_delim The separator between words in an n-gram.
+#' @param stopwords Stopwords set to exclude tokens.
 #' @return A list of character vectors containing the tokens, with one element in the list.
 #'
 #' See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
@@ -24,16 +26,17 @@
 #' token_ngrams(txt, n = 2)
 #' }
 #' 
-
 #'@export
-token_ngrams <- function(x, n = 3L, div = "words", stopwords = character(), ngram_delim = " ") {
+token_ngrams <- function(phrase, n = 3L, div = c("morph", "words", "nouns"), stopwords = character(), ngram_delim = " ") {
+  div <- match.arg(div)
+    
   if (div %in% c("morph", "words", "nouns")) {
     tf <- get(paste0("token_", div))
     tokenfunc <- function(col) tf(col, strip_punct = TRUE, strip_numeric = TRUE)
   } else {
     stop("Cannot tokenize with custom functions. token_ngrams can accept 'morph', 'words', and 'nouns' for the tokens parameter only.")
   }
-  words <- tokenfunc(x)
+  words <- tokenfunc(phrase)
   # ret <- generate_ngrams_batch(words, ngram_min = n_min, ngram_max = n, ngram_delim)
   ret <- simple_ngrams(words, n = n, stopwords = stopwords, ngram_delim = ngram_delim)
   ret

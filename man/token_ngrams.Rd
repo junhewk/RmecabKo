@@ -4,18 +4,22 @@
 \alias{token_ngrams}
 \title{N-gram tokenizer based on mecab-ko}
 \usage{
-token_ngrams(x, n = 3L, div = "words", stopwords = character(),
-  ngram_delim = " ")
+token_ngrams(phrase, n = 3L, div = c("morph", "words", "nouns"),
+  stopwords = character(), ngram_delim = " ")
 }
 \arguments{
-\item{n}{The number of words in the n-gram. This must be an integer greater than or equal to 1.}
-
-\item{ngram_delim}{The separator between words in an n-gram.}
-
 \item{phrase}{A character vector or a list of character vectors to be tokenized into morphemes.
 If \code{phrase} is a charactor vector, it can be of any length, and each element
 will be tokenized separately. If \code{phrase} is a list of charactor vectors, each element
 of the list should be a one-item vector.}
+
+\item{n}{The number of words in the n-gram. This must be an integer greater than or equal to 1.}
+
+\item{div}{The token generator definition. The options are "morph", "words", and "nouns".}
+
+\item{stopwords}{Stopwords set to exclude tokens.}
+
+\item{ngram_delim}{The separator between words in an n-gram.}
 }
 \value{
 A list of character vectors containing the tokens, with one element in the list.

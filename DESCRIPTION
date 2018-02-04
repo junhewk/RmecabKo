@@ -8,7 +8,7 @@ Description: An 'Rcpp' interface for Eunjeon project <http://eunjeon.blogspot.co
     The 'mecab-ko' and 'mecab-ko-dic' is based on a C++ library,
     and part-of-speech tagging with them is useful when the spacing of source Korean text is not correct.
     This package provides part-of-speech tagging and tokenization function for Korean text.
-Imports: Rcpp
+Imports: Rcpp, stringr
 LinkingTo: Rcpp
 License: GPL (>= 2)
 RoxygenNote: 6.0.1

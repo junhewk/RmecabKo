@@ -10,6 +10,8 @@ RmecabKo는 `mecab-ko` ([은전한닢 프로젝트](http://eunjeon.blogspot.com/
 
 Rcpp가 VC++에서 컴파일이 되지 않는 반면, `mecab-ko`는 현재 VC++에서만 컴파일이 가능합니다. Cygwin/Mingw로 컴파일해보려 노력했지만 성공하지 못했습니다. 컴파일된 `mecab-ko-msvc`와 `mecab-ko-dic-msvc`를 `install_mecab()` 함수를 통해 원하시는 디렉터리(예, `C:/Rlibs/mecab`)에 설치한 후 사용하실 수 있습니다.
 
+현재 라이브러리로는 사용자 사전 기능을 제공할 수 없습니다. 혹시 사용자 사전 기능이 필요하시면 새로 개발한 [`ktm`](https://github.com/junhewk/ktm)을 추천합니다. Scala 기반 Seunjeon 라이브러리를 rJava 인터페이스로 연결했어요. `RmecabKo` 만큼은 아니지만, 속도도 빠릅니다.
+
 
 ## Installation
 
@@ -54,7 +56,11 @@ install.packages("RmecabKo")
 devtools::install_github("junhewk/RmecabKo")
 ```
 
-한국어 문장 분석을 위해서는 `mecab-ko-dic` 또한 설치해야 합니다. `mecab-ko-dic` 설치를 위한 `install_dic` 함수를 추가했습니다(현재 Github version에만 적용). 현재 사용자 사전 기능 추가를 위해 작업 중이며, 사용사 사전을 사용하기 위해서는 `mecab-ko-dic` source를 `make`를 통해 build 해놓아야 합니다. `install_dic`은 package directory에 `mecab-ko-dic` 최신 버전을 받아 시스템에 설치하며, 이전의 `mecab-ko-dic`은 삭제합니다. 추후 Windows 10 Linux subsystem에서도 동일하게 작동할 수 있도록 확장할 예정입니다.
+한국어 문장 분석을 위해서는 `mecab-ko-dic` 또한 설치해야 합니다.
+
+<del>`mecab-ko-dic` 설치를 위한 `install_dic` 함수를 추가했습니다(현재 Github version에만 적용). 현재 사용자 사전 기능 추가를 위해 작업 중이며, 사용사 사전을 사용하기 위해서는 `mecab-ko-dic` source를 `make`를 통해 build 해놓아야 합니다. `install_dic`은 package directory에 `mecab-ko-dic` 최신 버전을 받아 시스템에 설치하며, 이전의 `mecab-ko-dic`은 삭제합니다. 추후 Windows 10 Linux subsystem에서도 동일하게 작동할 수 있도록 확장할 예정입니다.</del>
+
+사용자 사전 기능 구축을 위해서는 R에서 root 권한을 필요로 합니다. 이 쪽으로 개발을 진행하다가, 보안 문제로 추천되지 않는다는 의견을 얻어 중단합니다. `mecab-ko-dic` 설치와 사용자 사전 추가는 [Bitbucket](https://bitbucket.org/eunjeon/mecab-ko-dic)을 참조해 주세요.
 
 ### Windows
 
@@ -73,7 +79,7 @@ install_mecab("D:/Rlibs/mecab")
 *김영우님 도움*으로 windows 인코딩 문제를 해결했습니다. 감사합니다.
 
 * install_mecab() 함수가 subdirectory를 생성하지 못하던 것을 수정했습니다.
-* 한글 윈도우 인코딩에 맞춰서 출력할 수 있도록 현재 작업 중입니다. 일단, 시스템 인코딩이 `CP949` 인 경우, 자료를 `CP949`로 변환하여 출력하도록 수정했습니다.
+* 한글 윈도우 인코딩에 맞춰서 출력할 수 있도록 현재 작업 중입니다. <del>일단, 시스템 인코딩이 `CP949` 인 경우, 자료를 `CP949`로 변환하여 출력하도록 수정했습니다.</del> character의 인코딩 추측 함수를 활용해서, seamless한 분석 환경을 제공하도록 하겠습니다.
 
 ## Example
 
@@ -132,7 +138,7 @@ df %>%
 3. 자료형 추가
 4. <del>`mecab-ko-msvc`, `mecab-ko-dic-msvc` 설치 스크립트 제공 (Windows)</del>
 5. <del>`mecab-ko-dic` 설치 스크립트 제공 (Mac OSX, Linux)</del>
-6. User Dictionary 함수 추가
+6. <del>User Dictionary 함수 추가</del> 더 진행하지 않습니다.
 7. <del>다른 패키지 호환 함수 제공 (예, `tidytext` tokenizer 등)</del>
 
 

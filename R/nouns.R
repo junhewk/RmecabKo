@@ -17,6 +17,7 @@
 #' nouns(c("Some Korean Phrases"))
 #' }
 #' 
+#' @importFrom utils localeToCharset
 #' @export
 nouns <- function(phrase) {
   if (typeof(phrase) != "character") {
@@ -55,7 +56,7 @@ nouns <- function(phrase) {
 
     con <- file(phraseFile, "a", encoding = "UTF-8")
     tryCatch({
-      cat(iconv(phrase, from = localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
+      cat(iconv(phrase, from = utils::localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
     },
     finally = {
       close(con)
@@ -112,7 +113,7 @@ nouns <- function(phrase) {
 #' \dontrun{
 #' words(c("Some Korean Phrases"))
 #' }
-
+#' @importFrom utils localeToCharset
 #' @export
 words <- function(phrase) {
   if (typeof(phrase) != "character") {
@@ -151,7 +152,7 @@ words <- function(phrase) {
     
     con <- file(phraseFile, "a", encoding = "UTF-8")
     tryCatch({
-      cat(iconv(phrase, from = localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
+      cat(iconv(phrase, from = utils::localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
     },
     finally = {
       close(con)

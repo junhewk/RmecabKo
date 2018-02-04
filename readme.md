@@ -43,7 +43,11 @@ install.packages("RmecabKo")
 devtools::install_github("junhewk/RmecabKo")
 ```
 
-You need to install `mecab-ko-dic` also. (In Github version, `install_dic` function is added to support this functionality. You can install `mecab-ko-dic` with `install_dic()`. I'm working with custom dictionary function, for it `mecab-ko-dic` has to be installed by this function.) Otherwise, refer to [Bitbucket page](https://bitbucket.org/eunjeon/mecab-ko-dic). The installation procedure is same as `mecab-ko`.
+You need to install `mecab-ko-dic` also.
+
+<del>(In Github version, `install_dic` function is added to support this functionality. You can install `mecab-ko-dic` with `install_dic()`. I'm working with custom dictionary function, for it `mecab-ko-dic` has to be installed by this function.)</del>
+
+Refer to [Bitbucket page](https://bitbucket.org/eunjeon/mecab-ko-dic). The installation procedure is same as `mecab-ko`.
 
 ### Windows
 

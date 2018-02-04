@@ -3,6 +3,7 @@
 #' These tokernizer functions perform tokenization into full or selected morphemes,
 #' nouns.
 #'
+#' @rdname token
 #' @param phrase A character vector or a list of character vectors to be tokenized into morphemes.
 #'     If \code{phrase} is a charactor vector, it can be of any length, and each element
 #'     will be tokenized separately. If \code{phrase} is a list of charactor vectors, each element
@@ -23,21 +24,8 @@
 #' }
 #' 
 #' @importFrom stringr str_replace_all
-
-check_input <- function(x) {
-  check_character <- is.character(x) |
-    if (is.list(x)) {
-      check_list <- all(vapply(x, is.character, logical(1))) &
-        all(vapply(x, length, integer(1)) == 1L)
-    } else {
-      check_list <- FALSE
-    }
-  if (!(check_character | check_list))
-    stop("Input must be a character vector of any length or a list of character\n",
-         "  vectors, each of which has a length of 1.")
-}
-
-#'@export
+#' @rdname token
+#' @export
 token_morph <- function(phrase, strip_punct = FALSE, strip_numeric = FALSE) {
   check_input(phrase)
   if (strip_punct) phrase <- stringr::str_replace_all(phrase, "[[:punct:]]", "")
@@ -47,7 +35,8 @@ token_morph <- function(phrase, strip_punct = FALSE, strip_numeric = FALSE) {
   ret
 }
 
-#'@export
+#' @rdname token
+#' @export
 token_words <- function(phrase, strip_punct = FALSE, strip_numeric = FALSE) {
   check_input(phrase)
   if (strip_punct) phrase <- stringr::str_replace_all(phrase, "[[:punct:]]", "")
@@ -56,7 +45,8 @@ token_words <- function(phrase, strip_punct = FALSE, strip_numeric = FALSE) {
   ret
 }
 
-#'@export
+#' @rdname token
+#' @export
 token_nouns <- function(phrase, strip_punct = FALSE, strip_numeric = FALSE) {
   check_input(phrase)
   if (strip_punct) phrase <- stringr::str_replace_all(phrase, "[[:punct:]]", "")
