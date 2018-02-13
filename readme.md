@@ -76,8 +76,6 @@ Output of the `nouns` is also list. Each element of the list contains extracted 
 
 `tokenizer` functions are added. You can use `tokens_morph`, `tokens_words`, `tokens_nouns`, and `tokens_ngram`. Please refer to the help page of each function.
 
-`stopwords_ko` data frame is added. It contains Korean stop morphemes, based on the scraped sentences. The list of the Korean stop words will be updated continually.
-
 More examples will be provided on [Github wiki](https://github.com/junhewk/RmecabKo/wiki).
 
 

@@ -1,4 +1,4 @@
-# RmecabKo 0.1.6.1.1
+# RmecabKo 0.1.6.2
 
 * Fix `install_mecab` to support creating subdirectory
 * Fix `pos` and other token functions to check local encoding.
@@ -7,7 +7,6 @@
 
 * Add `install_dic` function to install `mecab-ko-dic`. It is needed to use custom dictionary functionality.
 * Add tokenizers.
-* Add stopwords_ko database.
 
 # RmecabKo 0.1.6
 

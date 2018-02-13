@@ -87,8 +87,6 @@ install_mecab("D:/Rlibs/mecab")
 
 tokenizers 함수를 추가했습니다. `token_morph`, `token_words`, `token_nouns`, `token_ngrams`의 네 가지 함수를 제공합니다. tidy data analysis를 위해, `tidytext`의 `unnest_tokens` 함수와 함께 사용할 수 있도록 결과를 리스트 형태로 반환합니다.
 
-`stopwords_ko` 자료를 추가했습니다. 전체 형태소 추출 시 불용어를 제외할 때 사용할 수 있습니다. 현재 작업중으로, 단어 목록을 계속 추가해 나갈 예정입니다. 또한, 사용자 불용어를 쉽게 추가할 수 있도록 함수 형태로 전환할 예정입니다. 현재는 `stopwords_ko`로 불러올 수 있습니다.
-
 * `pos`는 문장 전체의 형태소 태깅을 제공합니다.
 * `nouns`는 명사만 추출하여 제공합니다.
 * tokenizers는 형태소 전체, 실질형태소, 명사형의 형태소 토큰과 이 토큰의 n-gram 형태를 제공합니다.
