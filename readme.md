@@ -1,5 +1,7 @@
 # RmecabKo [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RmecabKo)](https://cran.r-project.org/package=RmecabKo) [![Downloads](http://cranlogs.r-pkg.org/badges/RmecabKo?color=brightgreen)](http://www.r-pkg.org/pkg/RmecabKo)
 
+*Multilanguage version of `RmecabKo`, `RcppMeCab` is uploaded on [Github](https://github.com/junhewk/RcppMeCab).* It's developing currently, and main architecture of `RmecabKo` will be substituted by it.
+
 The goal of RmecabKo is to parse Korean phrases with `mecab-ko` ([Eunjeon project](http://eunjeon.blogspot.com/), and to provide helper functions to analyze Korean documents. RmecabKo provides R wrapper function of `mecab-ko` with `Rcpp` (in Mac OSX and Linux) or wrapper function of binary build of `mecab-ko-msvc` by system commands and file I/O (in Windows).
 
 For instructions in Korean, refer to [readme.rmd](https://github.com/junhewk/RmecabKo/blob/master/readme.rmd).
