@@ -2,7 +2,7 @@
 
 # RmecabKo [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html) [![CRAN](http://www.r-pkg.org/badges/version/RmecabKo)](https://cran.r-project.org/package=RmecabKo) [![Downloads](http://cranlogs.r-pkg.org/badges/RmecabKo?color=brightgreen)](http://www.r-pkg.org/pkg/RmecabKo)
 
-*`RmecabKo`의 다국어 버전 `RcppMeCab`을 [Github](https://github.com/junhewk/RcppMeCab)에 업로드했습니다.* 윈도에서 네이티브로 설치 가능하며 인코딩 문제를 C++ 단에서 해결했습니다. 곧 `RmecabKo`의 메인 모듈을 `RcppMeCab`에서 inherit하는 것으로 변경할 예정입니다. 감사합니다. 
+18/5/21: **`RmecabKo`의 다국어 버전 `RcppMeCab`을 [Github](https://github.com/junhewk/RcppMeCab)에 업로드했습니다.** 윈도에서 네이티브로 설치 가능하며 인코딩 문제를 C++ 단에서 해결했습니다. 곧 `RmecabKo`의 메인 모듈을 `RcppMeCab`에서 inherit하는 것으로 변경할 예정입니다. 감사합니다. 
 
 RmecabKo는 `mecab-ko` ([은전한닢 프로젝트](http://eunjeon.blogspot.com/))를 기반으로 한국어 문장 형태소 분석, 그리고 한국어 텍스트의 분석을 진행할 때 필요한 다른 패키지의 도움 함수를 제공하는 것을 목적으로 합니다. 
 
