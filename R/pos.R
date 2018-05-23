@@ -58,7 +58,8 @@ pos <- function(phrase, join = TRUE) {
 
 		con <- file(phraseFile, "a", encoding = "UTF-8")
 		tryCatch({
-		  cat(iconv(phrase, from = utils::localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
+		  # cat(iconv(phrase, from = utils::localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
+		  cat(phrase, file=con, sep="\n")
 		},
 		finally = {
 		  close(con)
