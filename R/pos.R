@@ -56,14 +56,15 @@ pos <- function(phrase, join = TRUE) {
 		# saving phrase to UTF-8 txt file
 		phraseFile <- utils::shortPathName(tempfile())
 
-		con <- file(phraseFile, "a", encoding = "UTF-8")
-		tryCatch({
+		#con <- file(phraseFile, "a", encoding = "UTF-8")
+		#tryCatch({
 		  # cat(iconv(phrase, from = utils::localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
-		  cat(phrase, file=con, sep="\n")
-		},
-		finally = {
-		  close(con)
-		})
+		  #cat(phrase, file=con, sep="\n")
+		#},
+		#finally = {
+		  #close(con)
+		#})
+		writeLines(phrase, phraseFile, useBytes = TRUE)
 		
   	outputFile <- utils::shortPathName(tempfile())
   	
