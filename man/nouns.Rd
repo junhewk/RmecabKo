@@ -4,7 +4,7 @@
 \alias{nouns}
 \title{Noun extractor by mecab-ko}
 \usage{
-nouns(phrase)
+nouns(sentence, sys_dic = "", user_dic = "", parallel = FALSE)
 }
 \arguments{
 \item{phrase}{A character vector or character vectors.}
@@ -18,7 +18,7 @@ See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
 \code{nouns} returns nouns extracted from Korean phrases.
 }
 \details{
-Noun extraction is used for many Korean text analysis algorithms.
+Noun extraction is used for many Korean text analysis algorithms. The function coerces input to UTF-8.
 }
 \examples{
 \dontrun{

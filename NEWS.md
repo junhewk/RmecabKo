@@ -1,3 +1,8 @@
+# RmecabKo 0.1.7.0
+
+* Remove the core POS tagging functions and import `RcppMeCab` package to analyze the text
+* Fix encoding issues
+
 # RmecabKo 0.1.6.2
 
 * Fix `install_mecab` to support creating subdirectory

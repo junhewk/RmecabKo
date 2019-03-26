@@ -19,8 +19,8 @@
 
 install_dic <- function() {
   
-  mecabDicCurrentVer <- "https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.0.3-20170922.tar.gz"
-  mecabDicCurrentDir <- "mecab-ko-dic-2.0.3-20170922"
+  mecabDicCurrentVer <- "https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.1.1-20180720.tar.gz"
+  mecabDicCurrentDir <- "mecab-ko-dic-2.1.1-20180720"
   
   # verify os
   if (!is_linux() && !is_osx()) {

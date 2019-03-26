@@ -5,15 +5,3 @@ simple_ngrams <- function(tokenized_list, n, stopwords = character(), ngram_deli
     .Call('_RmecabKo_simple_ngrams', PACKAGE = 'RmecabKo', tokenized_list, n, stopwords, ngram_delim)
 }
 
-nounsRcpp <- function(phrase, dic) {
-    .Call('_RmecabKo_nounsRcpp', PACKAGE = 'RmecabKo', phrase, dic)
-}
-
-wordsRcpp <- function(phrase, dic) {
-    .Call('_RmecabKo_wordsRcpp', PACKAGE = 'RmecabKo', phrase, dic)
-}
-
-posRcpp <- function(phrase, dic, join) {
-    .Call('_RmecabKo_posRcpp', PACKAGE = 'RmecabKo', phrase, dic, join)
-}
-

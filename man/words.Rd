@@ -18,10 +18,11 @@ See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
 \code{words} returns full morphemes extracted from Korean phrases.
 }
 \details{
-It is based on Mecab-Ko POS classification.
+It is based on Mecab-Ko POS classification. Full morphemes are consisted with The function coerces input to UTF-8.
 }
 \examples{
 \dontrun{
 words(c("Some Korean Phrases"))
 }
+
 }

@@ -1,15 +1,14 @@
 Package: RmecabKo
 Type: Package
-Title: An 'Rcpp' Interface for Eunjeon Project
-Version: 0.1.6.2
+Title: Korean User Interface for MeCab in R
+Version: 0.1.7.0
 Author: Junhewk Kim
 Maintainer: Junhewk Kim <junhewk.kim@gmail.com>
-Description: An 'Rcpp' interface for Eunjeon project <http://eunjeon.blogspot.com/>.
-    The 'mecab-ko' and 'mecab-ko-dic' is based on a C++ library,
-    and part-of-speech tagging with them is useful when the spacing of source Korean text is not correct.
-    This package provides part-of-speech tagging and tokenization function for Korean text.
-Imports: Rcpp, stringr
-LinkingTo: Rcpp
-License: GPL (>= 2)
-RoxygenNote: 6.0.1
+Description: This package provides useful functions for text mining in Korean.
+  It depends major POS analysis on 'RcppMeCab' package.
+Imports: Rcpp, RcppMeCab, stringr
+LinkingTo: Rcpp, RcppMeCab
+License: GPL
+RoxygenNote: 6.1.1
+Encoding: UTF-8
 LazyData: true

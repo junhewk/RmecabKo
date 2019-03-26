@@ -5,7 +5,7 @@
 #'
 #' \code{nouns} returns nouns extracted from Korean phrases.
 #' 
-#' Noun extraction is used for many Korean text analysis algorithms.
+#' Noun extraction is used for many Korean text analysis algorithms. The function coerces input to UTF-8.
 #'
 #' @param phrase A character vector or character vectors.
 #' @return List of nouns will be returned. Element name of the list are original phrases.
@@ -17,92 +17,32 @@
 #' nouns(c("Some Korean Phrases"))
 #' }
 #' 
-#' @importFrom utils localeToCharset
+#' @import RcppMeCab
 #' @export
-nouns <- function(phrase) {
-  if (typeof(phrase) != "character") {
-    stop("'phrase' must be a character vector")
+nouns <- function(sentence, sys_dic = "", user_dic = "", parallel = FALSE) {
+  sentence <- enc2utf8(sentence)
+  
+  if (!is.list(sentence)) {
+    if (lengths(sentence) == 1) {
+      result <- RcppMeCab::pos(sentence, join = FALSE, format = "list", sys_dic, user_dic)
+    } else {
+      if (parallel == TRUE) {
+        result <- RcppMeCab::posParallel(sentence, join = FALSE, format = "list", sys_dic, user_dic)
+      } else {
+        result <- RcppMeCab::pos(sentence, join = FALSE, format = "list", sys_dic, user_dic)
+      }
+      
+    }
   }
   
-  if(is_osx() | is_linux()) {
-    
-    dicpath <- "/usr/local/lib/mecab/dic/mecab-ko-dic"
-    
-    if(dir.exists(dicpath)) {
-      dicpath <- paste0("-d ", dicpath)
-    } else {
-      stop(paste0("Mecab-ko-dic is not found on ", dicpath, ". Please check https://bitbucket.org/eunjeon/mecab-ko-dic."))
-    }
-
-    # Rcpp function to tagging
-    tagged <- nounsRcpp(phrase, dicpath)
-    
-  } else if(is_windows()) {
-    
-    if(!mecab_installed()) {
-      stop("Mecab binary is not installed in C:\\mecab. Please run install_mecab().")
-    }
-
-    mecabLibs <- getOption("mecab.libpath")
-    
-    # loading /inst/mecab/mecab.exe (mecab-ko-msvc) with system.file and system
-    mecabKo <- utils::shortPathName(file.path(mecabLibs, "mecab.exe"))
-    mecabKoRc <- utils::shortPathName(file.path(mecabLibs, "mecabrc"))
-    # mecabKoDic root in not working
-    mecabKoDic <- utils::shortPathName(file.path(mecabLibs, "mecab-ko-dic"))
-    
-    # saving phrase to UTF-8 txt file
-    phraseFile <- utils::shortPathName(tempfile())
-
-    con <- file(phraseFile, "a", encoding = "UTF-8")
-    tryCatch({
-      cat(iconv(phrase, from = utils::localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
-    },
-    finally = {
-      close(con)
-    })
-
-    outputFile <- utils::shortPathName(tempfile())
-    
-    mecabOption <- c("-r", mecabKoRc, "-d", mecabKoDic, "-o", outputFile, phraseFile)
-    
-    # run mecab.exe
-    system2(mecabKo, mecabOption)
-
-    con <- file(outputFile, "r")
-    posResult <- readLines(con, encoding="UTF-8")
-    close(con)
-    
-    i <- 1
-    tagged <- list()
-    length(tagged) <- i
-    
-    for (line in seq(1, length(posResult), 1)) {
-      
-      if (posResult[line] == "EOS") {
-        i <- i + 1
-        if (line != length(posResult)) length(tagged) <- i
-      } else {
-        taggedElements <- strsplit(posResult[line], "\t")
-        if(substring(taggedElements[[1]][2], 1, 1) == "N") {
-          tagged[[i]] <- c(tagged[[i]], taggedElements[[1]][1])
-        }
-      }
-    }
-    
-    suppressWarnings(file.remove(phraseFile))
-    suppressWarnings(file.remove(outputFile))
-  } 
-  names(tagged) <- phrase
-  
-  return(tagged)
+  sapply(result, function(x) x[which(names(x) %in% c("NNG", "NNP", "NNB"))])
 }
 
 #' Words extractor by mecab-ko
 #'
 #' \code{words} returns full morphemes extracted from Korean phrases.
 #' 
-#' It is based on Mecab-Ko POS classification.
+#' It is based on Mecab-Ko POS classification. Full morphemes are consisted with The function coerces input to UTF-8.
 #'
 #' @param phrase Character vector.
 #' @return List of full morphemes will be returned.
@@ -113,84 +53,25 @@ nouns <- function(phrase) {
 #' \dontrun{
 #' words(c("Some Korean Phrases"))
 #' }
-#' @importFrom utils localeToCharset
+#' 
+#' @import RcppMeCab
 #' @export
-words <- function(phrase) {
-  if (typeof(phrase) != "character") {
-    stop("'phrase' must be a character vector")
+words <- function(sentence, sys_dic = "", user_dic = "", parallel = FALSE) {
+  sentence <- enc2utf8(sentence)
+  
+  if (!is.list(sentence)) {
+    if (lengths(sentence) == 1) {
+      result <- RcppMeCab::pos(sentence, join = FALSE, format = "list", sys_dic, user_dic)
+    } else {
+      if (parallel == TRUE) {
+        result <- RcppMeCab::posParallel(sentence, join = FALSE, format = "list", sys_dic, user_dic)
+      } else {
+        result <- RcppMeCab::pos(sentence, join = FALSE, format = "list", sys_dic, user_dic)
+      }
+      
+    }
   }
   
-  if(is_osx() | is_linux()) {
-    
-    dicpath <- "/usr/local/lib/mecab/dic/mecab-ko-dic"
-    
-    if(dir.exists(dicpath)) {
-      dicpath <- paste0("-d ", dicpath)
-    } else {
-      stop(paste0("Mecab-ko-dic is not found on ", dicpath, ". Please check https://bitbucket.org/eunjeon/mecab-ko-dic."))
-    }
-    
-    # Rcpp function to tagging
-    tagged <- wordsRcpp(phrase, dicpath)
-    
-  } else if(is_windows()) {
-    
-    if(!mecab_installed()) {
-      stop("Mecab binary is not installed in C:\\mecab. Please run install_mecab().")
-    }
-    
-    mecabLibs <- getOption("mecab.libpath")
-    
-    # loading /inst/mecab/mecab.exe (mecab-ko-msvc) with system.file and system
-    mecabKo <- utils::shortPathName(file.path(mecabLibs, "mecab.exe"))
-    mecabKoRc <- utils::shortPathName(file.path(mecabLibs, "mecabrc"))
-    # mecabKoDic root in not working
-    mecabKoDic <- utils::shortPathName(file.path(mecabLibs, "mecab-ko-dic"))
-    
-    # saving phrase to UTF-8 txt file
-    phraseFile <- utils::shortPathName(tempfile())
-    
-    con <- file(phraseFile, "a", encoding = "UTF-8")
-    tryCatch({
-      cat(iconv(phrase, from = utils::localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
-    },
-    finally = {
-      close(con)
-    })
-    
-    outputFile <- utils::shortPathName(tempfile())
-    
-    mecabOption <- c("-r", mecabKoRc, "-d", mecabKoDic, "-o", outputFile, phraseFile)
-    
-    # run mecab.exe
-    system2(mecabKo, mecabOption)
-    
-    con <- file(outputFile, "r")
-    posResult <- readLines(con, encoding="UTF-8")
-    close(con)
-    
-    i <- 1
-    tagged <- list()
-    length(tagged) <- i
-    tagItem <- c("N", "V", "M", "I")
-    
-    for (line in seq(1, length(posResult), 1)) {
-      if (posResult[line] == "EOS") {
-        i <- i + 1
-        if (line != length(posResult)) length(tagged) <-i
-      } else {
-        taggedElements <- strsplit(posResult[line], "\t")
-        if (substring(taggedElements[[1]][2], 1, 1) %in% tagItem) {
-          tagged[[i]] <- c(tagged[[i]], taggedElements[[1]][1])
-        } else if (substring(taggedElements[[1]][2], 1, 2) == "SL") {
-          tagged[[i]] <- c(tagged[[i]], taggedElements[[1]][1])
-        }
-      }
-    }
-    
-    suppressWarnings(file.remove(phraseFile))
-    suppressWarnings(file.remove(outputFile))
-  } 
-
-  return(tagged)
+  sapply(result, function(x) x[which(names(x) %in% c("NNG", "NNP", "NNB", "NNBC", "NR", "NP", "VV", "VA",
+                                                     "VX", "VCP", "VCN", "MM", "MAG", "MAJ", "IC"))])
 }

@@ -5,10 +5,14 @@
 #'
 #' \code{pos} returns part-of-speech (POS) tagged morpheme of Korean phrases.
 #' 
-#' This is a basic function of part-of-speech tagging by mecab-ko.
+#' This is a basic function of part-of-speech tagging by mecab-ko. The function coerces input to UTF-8.
 #'
-#' @param phrase Character vector.
-#' @param join Boolean.
+#' @param sentence Character vector.
+#' @param join Boolean to determine providing POS tags with the morphemes or not. The default value is TRUE.
+#' @param format A data type for the result. The default value is "list". You can set this to "data.frame" to get a result as data frame format.
+#' @param sys_dic A location of system MeCab dictionary. The default value is "".
+#' @param user_dic A location of user-specific MeCab dictionary. The default value is "".
+#' @param parallel Boolean to determine using parallel analyzing. The default value is FALSE.
 #' @return List of POS tagged morpheme will be returned in conjoined character vecter form. Element name of the list are original phrases. If \code{join=FALSE}, it returns list of morpheme with named with tags.
 #'
 #' See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
@@ -19,97 +23,23 @@
 #' pos(c("Some Korean Phrases"), join=FALSE)
 #' }
 #' 
-#' @importFrom utils localeToCharset
+#' @import RcppMeCab
 #' @export
-pos <- function(phrase, join = TRUE) {
-  if (typeof(phrase) != "character") {
-    stop("'phrase' must be a character vector")
-  }
+pos <- function(sentence, join = TRUE, format = c("list", "data.frame"), sys_dic = "", user_dic = "", parallel = FALSE) {
+  sentence <- enc2utf8(sentence)
   
-	if(is_osx() | is_linux()) {
-	  
-		dicpath <- "/usr/local/lib/mecab/dic/mecab-ko-dic"
-		
-		if(dir.exists(dicpath)) {
-		  dicpath <- paste0("-d ", dicpath)
-		} else {
-		  stop(paste0("Mecab-ko-dic is not found on ", dicpath, ". Please check https://bitbucket.org/eunjeon/mecab-ko-dic."))
-		}
-
-		# Rcpp function to tagging
-  	tagged <- posRcpp(phrase, dicpath, join)
-		
-	} else if(is_windows()) {
-    
-    if(!mecab_installed()) {
-      stop("Mecab binary is not installed. Please run install_mecab().")
-    }
-	  
-	  mecabLibs <- getOption("mecab.libpath")
-	  
-		# loading /inst/mecab/mecab.exe (mecab-ko-msvc) with system.file and system
-    mecabKo <- utils::shortPathName(file.path(mecabLibs, "mecab.exe"))
-    # mecabKoDic root in not working
-    mecabKoRc <- utils::shortPathName(file.path(mecabLibs, "mecabrc"))
-    mecabKoDic <- utils::shortPathName(file.path(mecabLibs, "mecab-ko-dic"))
-    
-		# saving phrase to UTF-8 txt file
-		phraseFile <- utils::shortPathName(tempfile())
-
-		#con <- file(phraseFile, "a", encoding = "UTF-8")
-		#tryCatch({
-		  # cat(iconv(phrase, from = utils::localeToCharset()[1], to = "UTF-8"), file=con, sep="\n")
-		  #cat(phrase, file=con, sep="\n")
-		#},
-		#finally = {
-		  #close(con)
-		#})
-		writeLines(phrase, phraseFile, useBytes = TRUE)
-		
-  	outputFile <- utils::shortPathName(tempfile())
-  	
-  	mecabOption <- c("-r", mecabKoRc, "-d", mecabKoDic, "-o", outputFile, phraseFile)
-  	
-  	# run mecab.exe
-  	system2(mecabKo, mecabOption)
-
-  	con <- file(outputFile, "r")
-  	posResult <- readLines(con, encoding="UTF-8")
-  	close(con)
-  	
-  	i <- 1
-  	tagged <- list()
-  	length(tagged) <- i
-  	
-    for(line in seq(1, length(posResult), 1)) {
-      
-      taggedLine <- c()
-      
-      if(posResult[line] == "EOS") {
-        i <- i + 1
-        if (line != length(posResult)) length(tagged) <-  i
-      } else if(substring(posResult[line], 1, 1) == ",") {
-        if (join) {
-          taggedLine <- c(taggedLine, ",/SC")  
-        } else {
-          taggedLine["SC"] = ","
-        }
+  if (!is.list(sentence)) {
+    if (lengths(sentence) == 1) {
+      result <- RcppMeCab::pos(sentence, join, format, sys_dic, user_dic)
+    } else {
+      if (parallel == TRUE) {
+        result <- RcppMeCab::posParallel(sentence, join, format, sys_dic, user_dic)
       } else {
-        taggedElements <- strsplit(posResult[line], ",")
-        if (join) {
-          taggedLine <- c(taggedLine, gsub("\t", "/", taggedElements[[1]][1]))
-        } else {
-          taggedMorpheme <- strsplit(taggedElements[[1]][1], "\t")
-          taggedLine[taggedMorpheme[[1]][2]] <- taggedMorpheme[[1]][1]
-        }
-        tagged[[i]] <- c(tagged[[i]], taggedLine)
+        result <- RcppMeCab::pos(sentence, join, format, sys_dic, user_dic)
       }
+      
     }
-  	
-  	suppressWarnings(file.remove(phraseFile))
-  	suppressWarnings(file.remove(outputFile))
-	} 
-  names(tagged) <- phrase
-  
-  return(tagged)
+  }
+
+  result
 }

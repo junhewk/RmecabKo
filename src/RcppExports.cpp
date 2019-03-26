@@ -19,49 +19,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// nounsRcpp
-List nounsRcpp(const CharacterVector& phrase, const CharacterVector& dic);
-RcppExport SEXP _RmecabKo_nounsRcpp(SEXP phraseSEXP, SEXP dicSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const CharacterVector& >::type phrase(phraseSEXP);
-    Rcpp::traits::input_parameter< const CharacterVector& >::type dic(dicSEXP);
-    rcpp_result_gen = Rcpp::wrap(nounsRcpp(phrase, dic));
-    return rcpp_result_gen;
-END_RCPP
-}
-// wordsRcpp
-List wordsRcpp(const CharacterVector& phrase, const CharacterVector& dic);
-RcppExport SEXP _RmecabKo_wordsRcpp(SEXP phraseSEXP, SEXP dicSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const CharacterVector& >::type phrase(phraseSEXP);
-    Rcpp::traits::input_parameter< const CharacterVector& >::type dic(dicSEXP);
-    rcpp_result_gen = Rcpp::wrap(wordsRcpp(phrase, dic));
-    return rcpp_result_gen;
-END_RCPP
-}
-// posRcpp
-List posRcpp(const CharacterVector& phrase, const CharacterVector& dic, const LogicalVector& join);
-RcppExport SEXP _RmecabKo_posRcpp(SEXP phraseSEXP, SEXP dicSEXP, SEXP joinSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const CharacterVector& >::type phrase(phraseSEXP);
-    Rcpp::traits::input_parameter< const CharacterVector& >::type dic(dicSEXP);
-    Rcpp::traits::input_parameter< const LogicalVector& >::type join(joinSEXP);
-    rcpp_result_gen = Rcpp::wrap(posRcpp(phrase, dic, join));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_RmecabKo_simple_ngrams", (DL_FUNC) &_RmecabKo_simple_ngrams, 4},
-    {"_RmecabKo_nounsRcpp", (DL_FUNC) &_RmecabKo_nounsRcpp, 2},
-    {"_RmecabKo_wordsRcpp", (DL_FUNC) &_RmecabKo_wordsRcpp, 2},
-    {"_RmecabKo_posRcpp", (DL_FUNC) &_RmecabKo_posRcpp, 3},
     {NULL, NULL, 0}
 };
 
