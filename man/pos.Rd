@@ -2,39 +2,36 @@
 % Please edit documentation in R/pos.R
 \name{pos}
 \alias{pos}
-\title{POS tagging by mecab-ko}
+\title{Korean part-of-speech tagging}
 \usage{
-pos(sentence, join = TRUE, format = c("list", "data.frame"),
-  sys_dic = "", user_dic = "", parallel = FALSE)
+pos(
+  sentence,
+  join = TRUE,
+  format = c("list", "data.frame"),
+  sys_dic = "",
+  user_dic = "",
+  parallel = FALSE
+)
 }
 \arguments{
-\item{sentence}{Character vector.}
+\item{sentence}{A character vector or list of character scalars.}
 
-\item{join}{Boolean to determine providing POS tags with the morphemes or not. The default value is TRUE.}
+\item{join}{Whether to return `morpheme/POS` strings. When `FALSE`, POS tags
+are stored as names on each morpheme vector.}
 
-\item{format}{A data type for the result. The default value is "list". You can set this to "data.frame" to get a result as data frame format.}
+\item{format}{Either `"list"` or `"data.frame"`.}
 
-\item{sys_dic}{A location of system MeCab dictionary. The default value is "".}
+\item{sys_dic}{Optional Korean system dictionary directory.}
 
-\item{user_dic}{A location of user-specific MeCab dictionary. The default value is "".}
+\item{user_dic}{Optional compiled user dictionary.}
 
-\item{parallel}{Boolean to determine using parallel analyzing. The default value is FALSE.}
+\item{parallel}{Use [RcppMeCab::posParallel()] for multiple documents.}
 }
 \value{
-List of POS tagged morpheme will be returned in conjoined character vecter form. Element name of the list are original phrases. If \code{join=FALSE}, it returns list of morpheme with named with tags.
-
-See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
+A list for `format = "list"`, or the data frame returned by
+  `RcppMeCab`.
 }
 \description{
-\code{pos} returns part-of-speech (POS) tagged morpheme of Korean phrases.
-}
-\details{
-This is a basic function of part-of-speech tagging by mecab-ko. The function coerces input to UTF-8.
-}
-\examples{
-\dontrun{
-pos(c("Some Korean Phrases"))
-pos(c("Some Korean Phrases"), join=FALSE)
-}
-
+Tags Korean text with the active `mecab-ko-dic` dictionary through
+[RcppMeCab::pos()].
 }

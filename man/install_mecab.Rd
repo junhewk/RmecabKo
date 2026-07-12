@@ -2,27 +2,17 @@
 % Please edit documentation in R/install.R
 \name{install_mecab}
 \alias{install_mecab}
-\title{Install mecab-ko-msvc and mecab-ko-dic-msvc}
+\title{Deprecated MeCab installer}
 \usage{
 install_mecab(mecabLocation)
 }
 \arguments{
-\item{mecabLocation}{a directory to install Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC.}
+\item{mecabLocation}{Ignored legacy installation path.}
 }
 \value{
-None. The function will halt when the current operation system is not Windows, or /mecabLocation/mecab.exe exists.
-
-See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
+Invisibly returns `NULL`.
 }
 \description{
-\code{install_mecab} installs Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC.
-}
-\details{
-This code checks and installs Mecab-Ko-MSVC and Mecab-Ko-Dic-MSVC in user specified directory. Windows only.
-}
-\examples{
-\dontrun{
-install_mecab("D:/Rlibs/mecab")
-}
-
+`RcppMeCab` now installs the native MeCab engine and Korean dictionary.
+Install it with `install.packages("RcppMeCab")` instead.
 }

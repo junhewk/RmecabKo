@@ -2,27 +2,23 @@
 % Please edit documentation in R/nouns.R
 \name{nouns}
 \alias{nouns}
-\title{Noun extractor by mecab-ko}
+\title{Extract Korean nouns}
 \usage{
 nouns(sentence, sys_dic = "", user_dic = "", parallel = FALSE)
 }
 \arguments{
-\item{phrase}{A character vector or character vectors.}
+\item{sentence}{A character vector or list of character scalars.}
+
+\item{sys_dic}{Optional Korean system dictionary directory.}
+
+\item{user_dic}{Optional compiled user dictionary.}
+
+\item{parallel}{Use parallel analysis for multiple documents.}
 }
 \value{
-List of nouns will be returned. Element name of the list are original phrases.
-
-See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
+A named list of character vectors.
 }
 \description{
-\code{nouns} returns nouns extracted from Korean phrases.
-}
-\details{
-Noun extraction is used for many Korean text analysis algorithms. The function coerces input to UTF-8.
-}
-\examples{
-\dontrun{
-nouns(c("Some Korean Phrases"))
-}
-
+Keeps all `mecab-ko-dic` POS categories beginning with `N`, including
+common and proper nouns, dependent nouns, numerals, and pronouns.
 }

@@ -1,33 +1,20 @@
+# RmecabKo 0.2.0
+
+* Use `RcppMeCab` as the sole native MeCab engine and verify that the active
+  dictionary produces Korean POS tags.
+* Make noun, content-word, and morpheme tokenizers consistent for scalar,
+  vector, named, list, empty, and missing inputs.
+* Filter punctuation, numbers, and POS categories after morphological analysis.
+* Add multiple n-gram sizes, exact skip-grams, POS filters, and stopword
+  boundaries. Empty and too-short documents now safely return `character(0)`.
+* Deprecate the obsolete standalone MeCab installer.
+
 # RmecabKo 0.1.7.0
 
-* Remove the core POS tagging functions and import `RcppMeCab` package to analyze the text
-* Fix encoding issues
+* Replace package-local POS tagging with `RcppMeCab`.
+* Fix encoding issues.
 
 # RmecabKo 0.1.6.2
 
-* Fix `install_mecab` to support creating subdirectory
-* Fix `pos` and other token functions to check local encoding.
-
-# RmecabKo 0.1.6.1
-
-* Add `install_dic` function to install `mecab-ko-dic`. It is needed to use custom dictionary functionality.
-* Add tokenizers.
-
-# RmecabKo 0.1.6
-
-* Remove `mecab-ko-msvc` binary build from the package
-* Add `install_mecab` function to install `mecab-ko-msvc` and `mecab-ko-dic-msvc` in user setting directory.
-* Fix cpp function to assert errors correctly
-* Rearrange documents with `Roxygen2`
-
-# RmecabKo 0.1.5
-
-* Support Windows with binary build `mecab-ko-msvc` and `mecab-ko-dic-msvc`
-* Now analysing functions (`pos` and `nouns`) receives character vector, not list.
-* Add `nouns` function to extract nouns of Korean phrases
-
-# RmecabKo 0.1
-
-* First release
-* Support Mac OSX and Linux
-* Need installation of `mecab-ko` for building this package (and `mecab-ko-dic`)
+* Fix `install_mecab()` subdirectory handling.
+* Fix local encoding checks in POS and noun extraction.

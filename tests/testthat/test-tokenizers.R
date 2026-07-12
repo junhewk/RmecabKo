@@ -1,0 +1,41 @@
+test_that("POS list output is stable for scalar, vector, list, and missing input", {
+  mock_korean_engine()
+
+  scalar <- pos("문장", join = FALSE)
+  expect_type(scalar, "list")
+  expect_named(scalar, "문장")
+  expect_named(scalar[[1L]], c("NP", "JX", "SL", "SN", "NNBC", "SF", "VCP+EF"))
+
+  documents <- pos(list(first = "하나", second = NA_character_))
+  expect_named(documents, c("first", "second"))
+  expect_identical(documents[[2L]], NA_character_)
+})
+
+test_that("Korean noun and content-word presets use POS categories", {
+  mock_korean_engine()
+
+  expect_identical(nouns("문장")[[1L]], c("저", "개"))
+  expect_identical(words("문장")[[1L]], c("저", "R", "개", "입니다"))
+})
+
+test_that("morpheme filters operate on POS tags", {
+  mock_korean_engine()
+
+  expect_identical(
+    token_morph("문장", strip_punct = TRUE, strip_numeric = TRUE)[[1L]],
+    c("저", "는", "R", "개", "입니다")
+  )
+  expect_identical(
+    token_morph("문장", keep_pos = c("NP", "EF"))[[1L]],
+    c("저", "입니다")
+  )
+})
+
+test_that("input and scalar arguments are validated", {
+  mock_korean_engine()
+
+  expect_error(token_morph(factor("문장")), "character vector")
+  expect_error(token_morph(list(c("한", "둘"))), "one character")
+  expect_error(token_morph("문장", strip_punct = NA), "TRUE or FALSE")
+  expect_error(pos("문장", sys_dic = NA_character_), "sys_dic")
+})

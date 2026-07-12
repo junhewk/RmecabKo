@@ -2,27 +2,23 @@
 % Please edit documentation in R/nouns.R
 \name{words}
 \alias{words}
-\title{Words extractor by mecab-ko}
+\title{Extract Korean content words}
 \usage{
-words(phrase)
+words(sentence, sys_dic = "", user_dic = "", parallel = FALSE)
 }
 \arguments{
-\item{phrase}{Character vector.}
+\item{sentence}{A character vector or list of character scalars.}
+
+\item{sys_dic}{Optional Korean system dictionary directory.}
+
+\item{user_dic}{Optional compiled user dictionary.}
+
+\item{parallel}{Use parallel analysis for multiple documents.}
 }
 \value{
-List of full morphemes will be returned.
-
-See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
+A named list of character vectors.
 }
 \description{
-\code{words} returns full morphemes extracted from Korean phrases.
-}
-\details{
-It is based on Mecab-Ko POS classification. Full morphemes are consisted with The function coerces input to UTF-8.
-}
-\examples{
-\dontrun{
-words(c("Some Korean Phrases"))
-}
-
+Keeps Korean POS categories beginning with `N`, `V`, `M`, or `I`, plus
+foreign-language tokens tagged `SL`.
 }

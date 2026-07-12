@@ -2,43 +2,60 @@
 % Please edit documentation in R/ngrams.R
 \name{token_ngrams}
 \alias{token_ngrams}
-\title{N-gram tokenizer based on mecab-ko}
+\title{Korean morpheme n-grams and skip-grams}
 \usage{
-token_ngrams(phrase, n = 3L, div = c("morph", "words", "nouns"),
-  stopwords = character(), ngram_delim = " ")
+token_ngrams(
+  phrase,
+  n = 3L,
+  div = c("morph", "words", "nouns"),
+  stopwords = character(),
+  ngram_delim = " ",
+  skip = 0L,
+  keep_pos = NULL,
+  strip_punct = TRUE,
+  strip_numeric = TRUE,
+  sys_dic = "",
+  user_dic = "",
+  parallel = FALSE
+)
 }
 \arguments{
-\item{phrase}{A character vector or a list of character vectors to be tokenized into morphemes.
-If \code{phrase} is a charactor vector, it can be of any length, and each element
-will be tokenized separately. If \code{phrase} is a list of charactor vectors, each element
-of the list should be a one-item vector.}
+\item{phrase}{A character vector or list of character scalars.}
 
-\item{n}{The number of words in the n-gram. This must be an integer greater than or equal to 1.}
+\item{n}{Positive integer n-gram sizes. Multiple values are supported.}
 
-\item{div}{The token generator definition. The options are "morph", "words", and "nouns".}
+\item{div}{Token preset: all morphemes, content words, or nouns.}
 
-\item{stopwords}{Stopwords set to exclude tokens.}
+\item{stopwords}{Character tokens that break n-gram sequences.}
 
-\item{ngram_delim}{The separator between words in an n-gram.}
+\item{ngram_delim}{Character scalar placed between terms.}
+
+\item{skip}{Non-negative exact numbers of tokens to skip between adjacent
+terms. `skip = 0` creates contiguous n-grams.}
+
+\item{keep_pos}{Optional Korean POS tags to retain before n-gram generation.}
+
+\item{strip_punct}{Remove Korean punctuation tokens before generation.}
+
+\item{strip_numeric}{Remove `SN` numeric tokens before generation.}
+
+\item{sys_dic}{Optional Korean system dictionary directory.}
+
+\item{user_dic}{Optional compiled user dictionary.}
+
+\item{parallel}{Use parallel morphological analysis for multiple documents.}
 }
 \value{
-A list of character vectors containing the tokens, with one element in the list.
-
-See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
+A named list of character vectors. Empty or too-short documents
+  return `character(0)`; missing documents return `NA_character_`.
 }
 \description{
-This function tokenizes inputs into n-grams. For the developmental purpose, this function offers
-basic n-gram (or shingle n-gram) only. Other n-gram functionality will be added later. Punctuations
-and numerics are stripped for this tokenizer, because in Korean n-grams those are usually useless.
-N-gram function is based on the selective morpheme tokenizer (\code{token_words}), but you can
-select other tokenizer as well.
+Creates n-grams after Korean morphological analysis. Stopwords split token
+sequences, so an n-gram never bridges across a removed stopword.
 }
 \examples{
 \dontrun{
-txt <- # Some Korean sentence
-
-token_ngrams(txt)
-token_ngrams(txt, n = 2)
+token_ngrams("한국어 형태소 분석을 합니다", n = 2)
+token_ngrams("한국어 형태소 분석을 합니다", n = 2:3, skip = 0:1)
 }
-
 }

@@ -5,23 +5,29 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // simple_ngrams
-ListOf<CharacterVector> simple_ngrams(const ListOf<const CharacterVector> tokenized_list, const int n, CharacterVector stopwords, const String ngram_delim);
-RcppExport SEXP _RmecabKo_simple_ngrams(SEXP tokenized_listSEXP, SEXP nSEXP, SEXP stopwordsSEXP, SEXP ngram_delimSEXP) {
+List simple_ngrams(const List tokenized_list, const IntegerVector n_values, const IntegerVector skip_values, const CharacterVector stopwords, const String ngram_delim);
+RcppExport SEXP _RmecabKo_simple_ngrams(SEXP tokenized_listSEXP, SEXP n_valuesSEXP, SEXP skip_valuesSEXP, SEXP stopwordsSEXP, SEXP ngram_delimSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const ListOf<const CharacterVector> >::type tokenized_list(tokenized_listSEXP);
-    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
-    Rcpp::traits::input_parameter< CharacterVector >::type stopwords(stopwordsSEXP);
+    Rcpp::traits::input_parameter< const List >::type tokenized_list(tokenized_listSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type n_values(n_valuesSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type skip_values(skip_valuesSEXP);
+    Rcpp::traits::input_parameter< const CharacterVector >::type stopwords(stopwordsSEXP);
     Rcpp::traits::input_parameter< const String >::type ngram_delim(ngram_delimSEXP);
-    rcpp_result_gen = Rcpp::wrap(simple_ngrams(tokenized_list, n, stopwords, ngram_delim));
+    rcpp_result_gen = Rcpp::wrap(simple_ngrams(tokenized_list, n_values, skip_values, stopwords, ngram_delim));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_RmecabKo_simple_ngrams", (DL_FUNC) &_RmecabKo_simple_ngrams, 4},
+    {"_RmecabKo_simple_ngrams", (DL_FUNC) &_RmecabKo_simple_ngrams, 5},
     {NULL, NULL, 0}
 };
 

@@ -1,0 +1,58 @@
+name: R-CMD-check
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  schedule:
+    - cron: "17 3 1 * *"
+
+jobs:
+  check:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        r: [release]
+        include:
+          - os: ubuntu-latest
+            r: devel
+    env:
+      MECAB_LANG: ko
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.r }}
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::rcmdcheck
+            github::junhewk/RcppMeCab
+          needs: check
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          args: 'c("--no-manual", "--as-cran")'
+
+  rejects-japanese-dictionary:
+    runs-on: ubuntu-latest
+    env:
+      MECAB_LANG: ja
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+      - name: Install Japanese RcppMeCab and package dependencies
+        shell: Rscript {0}
+        run: |
+          install.packages(c("remotes", "testthat", "Rcpp"))
+          remotes::install_github("junhewk/RcppMeCab", upgrade = "never")
+          remotes::install_local(".", dependencies = FALSE)
+      - name: Verify Korean-only failure
+        shell: Rscript {0}
+        run: |
+          library(RmecabKo)
+          error <- tryCatch(pos("한국어"), error = identity)
+          stopifnot(inherits(error, "error"))
+          stopifnot(grepl("requires a Korean MeCab dictionary", conditionMessage(error)))

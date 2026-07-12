@@ -4,40 +4,56 @@
 \alias{token_morph}
 \alias{token_words}
 \alias{token_nouns}
-\title{Morpheme tokenizer based on mecab-ko}
+\title{Korean morpheme tokenizers}
 \usage{
-token_morph(phrase, strip_punct = FALSE, strip_numeric = FALSE)
+token_morph(
+  phrase,
+  strip_punct = FALSE,
+  strip_numeric = FALSE,
+  keep_pos = NULL,
+  sys_dic = "",
+  user_dic = "",
+  parallel = FALSE
+)
 
-token_words(phrase, strip_punct = FALSE, strip_numeric = FALSE)
+token_words(
+  phrase,
+  strip_punct = FALSE,
+  strip_numeric = FALSE,
+  sys_dic = "",
+  user_dic = "",
+  parallel = FALSE
+)
 
-token_nouns(phrase, strip_punct = FALSE, strip_numeric = FALSE)
+token_nouns(
+  phrase,
+  strip_punct = FALSE,
+  strip_numeric = FALSE,
+  sys_dic = "",
+  user_dic = "",
+  parallel = FALSE
+)
 }
 \arguments{
-\item{phrase}{A character vector or a list of character vectors to be tokenized into morphemes.
-If \code{phrase} is a charactor vector, it can be of any length, and each element
-will be tokenized separately. If \code{phrase} is a list of charactor vectors, each element
-of the list should be a one-item vector.}
+\item{phrase}{A character vector or list of character scalars.}
 
-\item{strip_punct}{Bool. If you want to remove punctuations in the phrase, set this as TRUE.}
+\item{strip_punct}{Remove tokens tagged as Korean punctuation.}
 
-\item{strip_numeric}{Bool. If you want to remove numbers in the phrase, set this as TRUE.}
+\item{strip_numeric}{Remove tokens tagged `SN`.}
+
+\item{keep_pos}{Optional Korean POS tags to retain. Compound tags match when
+any component is selected.}
+
+\item{sys_dic}{Optional Korean system dictionary directory.}
+
+\item{user_dic}{Optional compiled user dictionary.}
+
+\item{parallel}{Use parallel analysis for multiple documents.}
 }
 \value{
-A list of character vectors containing the tokens, with one element in the list.
-
-See examples in \href{https://github.com/junhewk/RmecabKo}{Github}.
+A named list of unnamed character vectors.
 }
 \description{
-These tokernizer functions perform tokenization into full or selected morphemes,
-nouns.
-}
-\examples{
-\dontrun{
-txt <- # Some Korean sentence
-
-token_morph(txt)
-token_words(txt, strip_punct = FALSE)
-token_nouns(txt, strip_numeric = TRUE)
-}
-
+Tokenizes text using Korean POS categories. Filtering is applied to MeCab
+output rather than deleting punctuation or digits from the source text.
 }
