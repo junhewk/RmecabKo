@@ -30,3 +30,29 @@ test_that("non-Korean dictionaries fail with useful metadata", {
     "requires a Korean MeCab dictionary.*ipadic/sys.dic"
   )
 })
+
+test_that("compiled user dictionaries are forwarded to the engine", {
+  reset_dictionary_cache()
+  requested <- character()
+  user_dictionary <- normalizePath(
+    file.path(tempdir(), "custom-user.dic"),
+    mustWork = FALSE
+  )
+  local_mocked_bindings(
+    .engine_dictionary_info = function(sys_dic = "", user_dic = "") {
+      requested <<- c(requested, user_dic)
+      fake_dictionary_info(sys_dic, user_dic)
+    },
+    .engine_pos = function(sentence, join = TRUE, format = "list",
+                           sys_dic = "", user_dic = "") {
+      requested <<- c(requested, user_dic)
+      fake_korean_pos(sentence, join, format, sys_dic, user_dic)
+    },
+    .package = "RmecabKo"
+  )
+
+  pos("사용자 사전", user_dic = user_dictionary)
+
+  expect_true(length(requested) >= 3L)
+  expect_true(all(requested == user_dictionary))
+})

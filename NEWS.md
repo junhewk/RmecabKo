@@ -8,6 +8,10 @@
 * Add multiple n-gram sizes, exact skip-grams, POS filters, and stopword
   boundaries. Empty and too-short documents now safely return `character(0)`.
 * Deprecate the obsolete standalone MeCab installer.
+* Preserve UTF-8 text on Windows and normalize all analyzer input at the R
+  boundary (fixes #1).
+* Support compiled cross-platform user dictionaries through `user_dic`, with
+  compilation delegated to `RcppMeCab::dict_index()` (fixes #2).
 
 # RmecabKo 0.1.7.0
 

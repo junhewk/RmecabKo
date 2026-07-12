@@ -39,3 +39,25 @@ test_that("input and scalar arguments are validated", {
   expect_error(token_morph("문장", strip_punct = NA), "TRUE or FALSE")
   expect_error(pos("문장", sys_dic = NA_character_), "sys_dic")
 })
+
+test_that("UTF-8 input reaches the engine unchanged", {
+  reset_dictionary_cache()
+  input <- enc2utf8("형태소 분석 테스트 중입니다.")
+  received <- NULL
+  local_mocked_bindings(
+    .engine_dictionary_info = fake_dictionary_info,
+    .engine_pos = function(sentence, join = TRUE, format = "list",
+                           sys_dic = "", user_dic = "") {
+      if (!identical(sentence, enc2utf8("한국어 형태소 분석"))) {
+        received <<- sentence
+      }
+      fake_korean_pos(sentence, join, format, sys_dic, user_dic)
+    },
+    .package = "RmecabKo"
+  )
+
+  pos(input)
+
+  expect_identical(received, input)
+  expect_identical(Encoding(received), "UTF-8")
+})
