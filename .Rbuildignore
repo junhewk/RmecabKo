@@ -2,7 +2,9 @@
 ^\.Rproj\.user$
 ^cran-comments\.md$
 ^\.github$
-^(README|readme)\.Rmd$
+^(README|readme)\.[Rr]md$
 ^(README|readme)_files$
 ^README_ko\.md$
 ^config\.(log|status)$
+^vendor$
+^ci\.Rprofile$

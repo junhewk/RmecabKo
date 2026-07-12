@@ -22,16 +22,25 @@ jobs:
       MECAB_LANG: ko
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: junhewk/RcppMeCab
+          path: vendor/RcppMeCab
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.r }}
           use-public-rspm: true
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: |
-            any::rcmdcheck
-            github::junhewk/RcppMeCab
-          needs: check
+      - name: Install dependencies and Korean backend
+        shell: Rscript {0}
+        run: |
+          install.packages(c("remotes", "rcmdcheck"))
+          remotes::install_deps("vendor/RcppMeCab", dependencies = TRUE)
+          remotes::install_local("vendor/RcppMeCab", dependencies = FALSE)
+          dic <- RcppMeCab::download_dic("ko")
+          writeLines(sprintf("options(mecabSysDic = %s)", deparse(dic)), "ci.Rprofile")
+      - name: Use Korean dictionary during checks
+        shell: bash
+        run: echo "R_PROFILE_USER=${GITHUB_WORKSPACE}/ci.Rprofile" >> "$GITHUB_ENV"
       - uses: r-lib/actions/check-r-package@v2
         with:
           args: 'c("--no-manual", "--as-cran")'
@@ -42,12 +51,21 @@ jobs:
       MECAB_LANG: ja
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: junhewk/RcppMeCab
+          path: vendor/RcppMeCab
       - uses: r-lib/actions/setup-r@v2
+      - name: Install Japanese MeCab
+        run: |
+          sudo apt-get update -y -qq
+          sudo apt-get install -y mecab libmecab-dev mecab-ipadic-utf8
       - name: Install Japanese RcppMeCab and package dependencies
         shell: Rscript {0}
         run: |
           install.packages(c("remotes", "testthat", "Rcpp"))
-          remotes::install_github("junhewk/RcppMeCab", upgrade = "never")
+          remotes::install_deps("vendor/RcppMeCab", dependencies = TRUE)
+          remotes::install_local("vendor/RcppMeCab", dependencies = FALSE)
           remotes::install_local(".", dependencies = FALSE)
       - name: Verify Korean-only failure
         shell: Rscript {0}
