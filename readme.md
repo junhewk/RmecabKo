@@ -1,17 +1,6 @@
 RmecabKo
 ================
 
-- [Why two packages?](#why-two-packages)
-- [Installation](#installation)
-- [Quick start](#quick-start)
-- [POS tagging](#pos-tagging)
-- [Korean tokenizers](#korean-tokenizers)
-- [N-grams and skip-grams](#n-grams-and-skip-grams)
-- [Custom dictionaries](#custom-dictionaries)
-- [Migrating to 0.2.0](#migrating-to-020)
-- [Development](#development)
-- [License](#license)
-
 <!-- README.md is generated from readme.rmd. Edit this file, then render it. -->
 
 [![R-CMD-check](https://github.com/junhewk/RmecabKo/actions/workflows/R-CMD-check.yaml/badge.svg?branch=master)](https://github.com/junhewk/RmecabKo/actions/workflows/R-CMD-check.yaml)
