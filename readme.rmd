@@ -30,7 +30,8 @@ knitr::opts_chunk$set(
 noun and content-word extraction, morpheme tokenization, and morpheme-aware
 n-grams and skip-grams.
 
-For Korean documentation, see [README_ko.md](README_ko.md).
+For Korean documentation, see
+[README_ko.md](https://github.com/junhewk/RmecabKo/blob/master/README_ko.md).
 
 ## Why two packages?
 
@@ -61,9 +62,19 @@ install.packages("remotes")
 remotes::install_github("junhewk/RmecabKo")
 ```
 
-`RcppMeCab` is installed as a dependency and supplies the native Korean MeCab
-engine and dictionary. A separate system-wide MeCab installation is normally
-not required.
+`RcppMeCab` is installed as a dependency and supplies the native MeCab
+interface. Most Korean-profile installations also include the matching engine
+and dictionary. If no Korean dictionary is active, install and select one with:
+
+```{r install-korean-dictionary, eval=FALSE}
+RcppMeCab::download_dic("ko")
+RcppMeCab::set_dic("ko")
+```
+
+A compatible `mecab-ko` engine is required; selecting `mecab-ko-dic` does not
+convert a standard Japanese MeCab engine into the Korean engine. Alternatively,
+pass the directory of an existing `mecab-ko-dic` installation through
+`sys_dic`.
 
 ## Quick start
 

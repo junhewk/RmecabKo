@@ -31,6 +31,21 @@ test_that("non-Korean dictionaries fail with useful metadata", {
   )
 })
 
+test_that("unavailable dictionaries fail with setup guidance", {
+  reset_dictionary_cache()
+  local_mocked_bindings(
+    .engine_dictionary_info = function(...) {
+      stop("dicrc not found")
+    },
+    .package = "RmecabKo"
+  )
+
+  expect_error(
+    RmecabKo:::.check_korean_dictionary(),
+    "download_dic.*set_dic.*compatible mecab-ko engine"
+  )
+})
+
 test_that("compiled user dictionaries are forwarded to the engine", {
   reset_dictionary_cache()
   requested <- character()

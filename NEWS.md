@@ -1,3 +1,13 @@
+# RmecabKo 0.2.1
+
+* Require the companion `RcppMeCab` 0.0.1.7 release used by the 0.2.0
+  migration to centralized MeCab and dictionary management.
+* Skip the end-to-end integration test when a check platform has no compatible
+  Korean backend while retaining deterministic dictionary-validation tests.
+* Use a valid external URL for the Korean README in built source packages.
+* Encode Korean documentation examples with R Unicode escapes so the PDF
+  reference manual builds with CRAN's LaTeX toolchain.
+
 # RmecabKo 0.2.0
 
 * Use `RcppMeCab` as the sole native MeCab engine and verify that the active

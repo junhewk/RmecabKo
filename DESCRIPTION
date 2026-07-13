@@ -1,7 +1,7 @@
 Package: RmecabKo
 Type: Package
 Title: Korean Text Analysis with 'MeCab'
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: person("Junhewk", "Kim", role = c("aut", "cre"),
     email = "junhewk.kim@gmail.com")
 Description: Korean-specific part-of-speech tagging, morpheme extraction,
@@ -10,7 +10,7 @@ Description: Korean-specific part-of-speech tagging, morpheme extraction,
 Depends: R (>= 3.6.0)
 Imports:
     Rcpp,
-    RcppMeCab (>= 0.0.1.6)
+    RcppMeCab (>= 0.0.1.7)
 LinkingTo: Rcpp
 Suggests:
     testthat (>= 3.0.0)

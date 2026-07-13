@@ -20,8 +20,9 @@
 #'   return `character(0)`; missing documents return `NA_character_`.
 #' @examples
 #' \dontrun{
-#' token_ngrams("한국어 형태소 분석을 합니다", n = 2)
-#' token_ngrams("한국어 형태소 분석을 합니다", n = 2:3, skip = 0:1)
+#' text <- "\ud55c\uad6d\uc5b4 \ud615\ud0dc\uc18c \ubd84\uc11d\uc744 \ud569\ub2c8\ub2e4"
+#' token_ngrams(text, n = 2)
+#' token_ngrams(text, n = 2:3, skip = 0:1)
 #' }
 #' @export
 token_ngrams <- function(phrase, n = 3L,

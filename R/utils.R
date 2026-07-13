@@ -98,6 +98,10 @@
     error = function(error) {
       stop(
         "RmecabKo could not load a MeCab dictionary: ", conditionMessage(error),
+        ". Install and activate a Korean dictionary with ",
+        "RcppMeCab::download_dic(\"ko\") and RcppMeCab::set_dic(\"ko\"), ",
+        "or supply its directory through sys_dic. A compatible mecab-ko ",
+        "engine is required.",
         call. = FALSE
       )
     }
@@ -122,8 +126,10 @@
     stop(
       "RmecabKo requires a Korean MeCab dictionary, but the active ",
       "dictionary did not produce Korean POS tags. Loaded dictionary: ",
-      filenames, ". Install the Korean build of RcppMeCab or supply a ",
-      "mecab-ko-dic directory through sys_dic.",
+      filenames, ". Install and activate one with ",
+      "RcppMeCab::download_dic(\"ko\") and RcppMeCab::set_dic(\"ko\"), ",
+      "or supply its directory through sys_dic. A compatible mecab-ko ",
+      "engine is required.",
       call. = FALSE
     )
   }

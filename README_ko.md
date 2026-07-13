@@ -23,6 +23,17 @@ token_morph(text, strip_punct = TRUE)
 token_ngrams(text, n = 1:3, skip = 0:1, div = "words")
 ```
 
+활성화된 한국어 사전이 없다면 다음과 같이 설치하고 선택할 수 있습니다.
+
+```r
+RcppMeCab::download_dic("ko")
+RcppMeCab::set_dic("ko")
+```
+
+한국어 분석에는 호환되는 `mecab-ko` 엔진이 필요합니다. 표준 일본어
+MeCab 엔진에서 한국어 사전만 선택해도 한국어 엔진으로 바뀌지는 않습니다.
+기존 `mecab-ko-dic` 설치 경로가 있다면 `sys_dic`으로 전달할 수 있습니다.
+
 일본어 사전이 선택된 경우 잘못된 결과를 반환하지 않고 한국어 사전이
 필요하다는 오류를 표시합니다.
 
