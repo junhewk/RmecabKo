@@ -42,6 +42,9 @@ jobs:
           install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps("vendor/RcppMeCab", dependencies = TRUE)
           remotes::install_local("vendor/RcppMeCab", dependencies = FALSE)
+          # Install RmecabKo's own dependencies (e.g. stringi). RcppMeCab is
+          # already satisfied by the vendored build, so it is not re-fetched.
+          remotes::install_deps(".", dependencies = TRUE, upgrade = "never")
           dic <- RcppMeCab::download_dic("ko")
           writeLines(sprintf("options(mecabSysDic = %s)", deparse(dic)), "ci.Rprofile")
       - name: Use Korean dictionary during checks
@@ -73,6 +76,9 @@ jobs:
           install.packages(c("remotes", "testthat", "Rcpp"))
           remotes::install_deps("vendor/RcppMeCab", dependencies = TRUE)
           remotes::install_local("vendor/RcppMeCab", dependencies = FALSE)
+          # Install RmecabKo's hard dependencies (e.g. stringi) so the package
+          # can be loaded; RcppMeCab is already satisfied by the vendored build.
+          remotes::install_deps(".", dependencies = NA, upgrade = "never")
           remotes::install_local(".", dependencies = FALSE)
       - name: Verify Korean-only failure
         shell: Rscript {0}
