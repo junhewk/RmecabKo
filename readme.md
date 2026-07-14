@@ -15,11 +15,38 @@ version](https://img.shields.io/badge/R-%E2%89%A5%203.6.0-276DC3.svg)](https://w
 [![License: GPL (\>=
 2)](https://img.shields.io/badge/license-GPL%20(%3E%3D%202)-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
 
-`RmecabKo` provides Korean-specific text analysis in R using
+`RmecabKo` is a Korean text-analysis toolkit for R, built on
 [`RcppMeCab`](https://cran.r-project.org/package=RcppMeCab) and
-`mecab-ko-dic`. It focuses on a small, dependable API for Korean POS
-tagging, noun and content-word extraction, morpheme tokenization, and
-morpheme-aware n-grams and skip-grams.
+`mecab-ko-dic`. It provides `tidytext`-ready tokenizers, curated Korean
+stopword data, access to the KNU sentiment lexicon, friendly
+user-dictionary management, predicate lemmatization, keyword extraction,
+keyword-in-context concordances, and text normalization.
+
+**RmecabKo is the only actively maintained CRAN package dedicated to
+Korean text analysis.** The dedicated alternatives have left CRAN —
+`KoNLP` was archived in 2020 and `elbird` (a Kiwi binding) in 2023 — so
+`RcppMeCab` (the native engine, by the same author) and `RmecabKo` (this
+analysis layer on top of it) are the maintained,
+`install.packages()`-able path for Korean NLP in R.
+
+## What’s new in 0.3.0
+
+- **Tidytext-ready tokenizers.** `token_morph()`, `token_words()`,
+  `token_nouns()`, and `token_ngrams()` follow the `tokenizers`
+  contract, so they drop straight into
+  `tidytext::unnest_tokens(token = ...)`. New `simplify` and `drop_pos`
+  arguments.
+- **Korean data.** `stopwords_ko`, a curated POS-tagged stopword table
+  with `stopwords_ko_words()` / `stopwords_ko_tags()`, and
+  `lexicon_knu()` for the KNU sentiment lexicon.
+- **User dictionaries.** `dict_add_words()` and friends register new
+  words from R, filling the `mecab-ko-dic` context IDs and
+  final-consonant flag for you.
+- **Analysis helpers.** `token_lemma()` (predicate dictionary forms),
+  `keywords_tfidf()` / `keywords_textrank()`, `kwic()`, and
+  `text_normalize()`.
+- A `vignette("korean-text-analysis")` walks through the full tidy
+  workflow.
 
 For Korean documentation, see
 [README_ko.md](https://github.com/junhewk/RmecabKo/blob/master/README_ko.md).
@@ -31,7 +58,7 @@ The responsibilities are intentionally separated:
 | Package | Responsibility |
 |----|----|
 | `RcppMeCab` | Native MeCab build, R/C++ bindings, parallel analysis, dictionary metadata, and user-dictionary compilation |
-| `RmecabKo` | Korean dictionary validation, Korean POS presets, token filtering, and morpheme n-grams |
+| `RmecabKo` | Korean dictionary validation, `tidytext`-ready tokenizers, stopword and sentiment data, user-dictionary management, lemmatization, keyword extraction, KWIC, and text normalization |
 
 This keeps platform-specific native code in one place while allowing
 `RmecabKo` to expose Korean-friendly behavior. If the active MeCab
@@ -65,8 +92,8 @@ RcppMeCab::set_dic("ko")
 ```
 
 A compatible `mecab-ko` engine is required; selecting `mecab-ko-dic`
-does not convert a standard Japanese MeCab engine into the Korean engine.
-Alternatively, pass the directory of an existing `mecab-ko-dic`
+does not convert a standard Japanese MeCab engine into the Korean
+engine. Alternatively, pass the directory of an existing `mecab-ko-dic`
 installation through `sys_dic`.
 
 ## Quick start
@@ -87,8 +114,8 @@ token_morph(text, strip_punct = TRUE)
 
 Analysis functions accept a character vector or a list containing one
 character value per document. List output always contains one character
-vector per input document. Supplied document names are preserved;
-otherwise the input text is used as the document name.
+vector per input document, following the `tokenizers` contract: supplied
+document names are preserved, and unnamed input yields an unnamed list.
 
 Missing documents remain `NA_character_`, while valid empty documents
 return `character(0)` from tokenizers and n-gram functions.
@@ -162,32 +189,47 @@ Important semantics:
 
 ## Custom dictionaries
 
-Compiling a user dictionary remains the responsibility of `RcppMeCab`:
+Teach the analyzer new words from R without hand-writing `mecab-ko-dic`
+CSV rows. `RmecabKo` fills in the context IDs and final-consonant flag,
+compiles the dictionary through `RcppMeCab`, and activates it for the
+session:
 
 ``` r
-RcppMeCab::dict_index(
-  dic_csv = "user-words.csv",
-  out_dic = "user-words.dic",
-  dic_dir = getOption("mecabSysDic")
-)
-
-user_dictionary <- normalizePath("user-words.dic")
-pos("새로 등록한 단어", user_dic = user_dictionary)
+dict_add_words(c("은전한닢", "카비봇"), tag = "NNP")
+dict_use()
+pos("카비봇 출시 소식")
+dict_words()
+dict_remove_words("카비봇")
 ```
 
-A Korean proper-noun entry follows the `mecab-ko-dic` CSV layout, for
-example:
+Pass a data frame for finer control over `reading`, `meaning`, and
+`cost`, or supply `left_id`/`right_id` to override the automatic lookup.
+To inspect the dictionary currently loaded by MeCab, use
+`RcppMeCab::dictionary_info()`.
 
-``` text
-새단어,,,,NNP,*,F,새단어,*,*,*,*
-```
+## Tidytext, data, and analysis helpers
 
-Use full paths for `sys_dic` and `user_dic`. To inspect the dictionary
-currently loaded by MeCab, use:
+The tokenizers follow the `tokenizers` contract, so they drop straight
+into a tidy pipeline, and the package ships curated Korean data and
+analysis helpers:
 
 ``` r
-RcppMeCab::dictionary_info()
+library(dplyr)
+library(tidytext)
+
+tibble(doc = names(demo_ko), text = demo_ko) |>
+  unnest_tokens(word, text, token = token_nouns) |>
+  anti_join(data.frame(word = stopwords_ko_words()), by = "word") |>
+  count(doc, word, sort = TRUE)
+
+keywords_tfidf(demo_ko, div = "nouns")       # TF-IDF keywords
+token_lemma("아침을 먹었다")                  # predicate dictionary forms
+kwic(demo_ko, "분석")                         # keyword in context
+text_normalize("분석 ㅋㅋㅋㅋ 재밌어요!!!!")  # NFC, width, run squashing
+lexicon_knu()                                 # KNU sentiment lexicon
 ```
+
+See `vignette("korean-text-analysis")` for a full walkthrough.
 
 ## Migrating to 0.2.0
 

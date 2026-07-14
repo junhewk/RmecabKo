@@ -8,3 +8,5 @@
 ^config\.(log|status)$
 ^vendor$
 ^ci\.Rprofile$
+^data-raw$
+^RmecabKo_.*\.tar\.gz$

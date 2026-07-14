@@ -1,22 +1,36 @@
 Package: RmecabKo
 Type: Package
 Title: Korean Text Analysis with 'MeCab'
-Version: 0.2.1
+Version: 0.3.0
 Authors@R: person("Junhewk", "Kim", role = c("aut", "cre"),
     email = "junhewk.kim@gmail.com")
-Description: Korean-specific part-of-speech tagging, morpheme extraction,
-    content-word and noun tokenization, and morpheme-aware n-grams. The native
-    'MeCab' interface and dictionary compilation are provided by 'RcppMeCab'.
+Description: A Korean text-analysis layer over the 'MeCab' morphological
+    analyzer. Provides tokenizers that follow the 'tokenizers' contract for
+    use with 'tidytext', morpheme-aware n-grams, a curated Korean stopword
+    table, access to the KNU sentiment lexicon, friendly user-dictionary
+    management, predicate lemmatization, keyword extraction, keyword-in-context
+    concordances, and light text normalization. The native 'MeCab' interface
+    and dictionary compilation are provided by 'RcppMeCab'.
 Depends: R (>= 3.6.0)
 Imports:
     Rcpp,
-    RcppMeCab (>= 0.0.1.7)
+    RcppMeCab (>= 0.0.1.7),
+    stringi
 LinkingTo: Rcpp
 Suggests:
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr,
+    jsonlite,
+    tibble,
+    dplyr,
+    tidytext,
+    knitr,
+    rmarkdown
 License: GPL (>= 2)
 URL: https://github.com/junhewk/RmecabKo
 BugReports: https://github.com/junhewk/RmecabKo/issues
 Encoding: UTF-8
+LazyData: true
+VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0

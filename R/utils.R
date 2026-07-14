@@ -1,5 +1,6 @@
 .rmecabko_state <- new.env(parent = emptyenv())
 .rmecabko_state$dictionary_checks <- new.env(parent = emptyenv())
+.rmecabko_state$id_defs <- new.env(parent = emptyenv())
 
 .engine_dictionary_info <- function(sys_dic = "", user_dic = "") {
   RcppMeCab::dictionary_info(sys_dic = sys_dic, user_dic = user_dic)
@@ -11,6 +12,41 @@
 
 .engine_pos_parallel <- function(...) {
   RcppMeCab::posParallel(...)
+}
+
+.engine_dict_index <- function(...) {
+  RcppMeCab::dict_index(...)
+}
+
+.effective_sys_dic <- function(sys_dic) {
+  if (nzchar(sys_dic)) {
+    return(sys_dic)
+  }
+  option <- getOption("mecabSysDic")
+  if (is.null(option)) "" else as.character(option)[1L]
+}
+
+.effective_user_dic <- function(user_dic) {
+  if (nzchar(user_dic)) {
+    return(user_dic)
+  }
+  as.character(getOption("rmecabko.user_dic", ""))[1L]
+}
+
+.simplify_list <- function(x, simplify) {
+  if (.check_flag(simplify, "simplify") && length(x) == 1L) {
+    x[[1L]]
+  } else {
+    x
+  }
+}
+
+.user_data_dir <- function(...) {
+  root <- getOption("rmecabko.data_dir")
+  if (is.null(root)) {
+    root <- tools::R_user_dir("RmecabKo", "data")
+  }
+  file.path(root, ...)
 }
 
 .check_flag <- function(x, name) {
@@ -51,22 +87,12 @@
   }
 
   x <- enc2utf8(x)
-  document_names <- supplied_names
-  if (is.null(document_names)) {
-    document_names <- x
-  }
 
-  list(text = x, names = document_names)
+  list(text = x, names = supplied_names)
 }
 
 .dictionary_key <- function(sys_dic, user_dic) {
-  effective_sys_dic <- sys_dic
-  if (!nzchar(effective_sys_dic)) {
-    option <- getOption("mecabSysDic")
-    if (!is.null(option)) {
-      effective_sys_dic <- as.character(option)[1L]
-    }
-  }
+  effective_sys_dic <- .effective_sys_dic(sys_dic)
   stamp <- function(path, directory = FALSE) {
     if (!nzchar(path)) {
       return(NA_character_)
@@ -196,8 +222,10 @@
 }
 
 .tokenize_documents <- function(phrase, preset, strip_punct, strip_numeric,
-                                keep_pos, sys_dic, user_dic, parallel) {
+                                keep_pos, sys_dic, user_dic, parallel,
+                                drop_pos = NULL) {
   documents <- .normalize_documents(phrase)
+  user_dic <- .effective_user_dic(user_dic)
   .check_korean_dictionary(sys_dic, user_dic)
   tagged <- .pos_list(documents, FALSE, sys_dic, user_dic, parallel)
   punctuation <- c("SF", "SE", "SS", "SSO", "SSC", "SC", "SY", "SW", "SP")
@@ -214,6 +242,9 @@
       words = grepl("^[NVMI]", tags) | tags == "SL"
     )
     keep <- keep & .matches_keep_pos(tags, keep_pos)
+    if (!is.null(drop_pos)) {
+      keep <- keep & !.matches_keep_pos(tags, drop_pos)
+    }
     if (strip_punct) {
       keep <- keep & !vapply(
         .tag_components(tags),

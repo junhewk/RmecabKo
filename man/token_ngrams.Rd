@@ -12,11 +12,13 @@ token_ngrams(
   ngram_delim = " ",
   skip = 0L,
   keep_pos = NULL,
+  drop_pos = NULL,
   strip_punct = TRUE,
   strip_numeric = TRUE,
   sys_dic = "",
   user_dic = "",
-  parallel = FALSE
+  parallel = FALSE,
+  simplify = FALSE
 )
 }
 \arguments{
@@ -35,6 +37,8 @@ terms. `skip = 0` creates contiguous n-grams.}
 
 \item{keep_pos}{Optional Korean POS tags to retain before n-gram generation.}
 
+\item{drop_pos}{Optional Korean POS tags to remove before n-gram generation.}
+
 \item{strip_punct}{Remove Korean punctuation tokens before generation.}
 
 \item{strip_numeric}{Remove `SN` numeric tokens before generation.}
@@ -44,10 +48,14 @@ terms. `skip = 0` creates contiguous n-grams.}
 \item{user_dic}{Optional compiled user dictionary.}
 
 \item{parallel}{Use parallel morphological analysis for multiple documents.}
+
+\item{simplify}{When `TRUE` and a single document is supplied, return a bare
+character vector instead of a length-one list.}
 }
 \value{
-A named list of character vectors. Empty or too-short documents
-  return `character(0)`; missing documents return `NA_character_`.
+A list of character vectors, named when the input is named. Empty or
+  too-short documents return `character(0)`; missing documents return
+  `NA_character_`.
 }
 \description{
 Creates n-grams after Korean morphological analysis. Stopwords split token

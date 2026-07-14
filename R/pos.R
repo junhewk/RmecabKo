@@ -19,7 +19,7 @@ pos <- function(sentence, join = TRUE, format = c("list", "data.frame"),
   join <- .check_flag(join, "join")
   parallel <- .check_flag(parallel, "parallel")
   sys_dic <- .check_path(sys_dic, "sys_dic")
-  user_dic <- .check_path(user_dic, "user_dic")
+  user_dic <- .effective_user_dic(.check_path(user_dic, "user_dic"))
   format <- match.arg(format)
   .check_korean_dictionary(sys_dic, user_dic)
 

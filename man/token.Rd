@@ -11,9 +11,11 @@ token_morph(
   strip_punct = FALSE,
   strip_numeric = FALSE,
   keep_pos = NULL,
+  drop_pos = NULL,
   sys_dic = "",
   user_dic = "",
-  parallel = FALSE
+  parallel = FALSE,
+  simplify = FALSE
 )
 
 token_words(
@@ -22,7 +24,8 @@ token_words(
   strip_numeric = FALSE,
   sys_dic = "",
   user_dic = "",
-  parallel = FALSE
+  parallel = FALSE,
+  simplify = FALSE
 )
 
 token_nouns(
@@ -31,7 +34,8 @@ token_nouns(
   strip_numeric = FALSE,
   sys_dic = "",
   user_dic = "",
-  parallel = FALSE
+  parallel = FALSE,
+  simplify = FALSE
 )
 }
 \arguments{
@@ -44,16 +48,27 @@ token_nouns(
 \item{keep_pos}{Optional Korean POS tags to retain. Compound tags match when
 any component is selected.}
 
+\item{drop_pos}{Optional Korean POS tags to remove. Compound tags match when
+any component is selected. Combine with [stopwords_ko_tags()] to strip
+particles, endings, or other function morphemes.}
+
 \item{sys_dic}{Optional Korean system dictionary directory.}
 
 \item{user_dic}{Optional compiled user dictionary.}
 
 \item{parallel}{Use parallel analysis for multiple documents.}
+
+\item{simplify}{When `TRUE` and a single document is supplied, return a bare
+character vector instead of a length-one list.}
 }
 \value{
-A named list of unnamed character vectors.
+A list of character vectors, one per document, named when the input
+  is named. With `simplify = TRUE` a single document returns a character
+  vector.
 }
 \description{
 Tokenizes text using Korean POS categories. Filtering is applied to MeCab
-output rather than deleting punctuation or digits from the source text.
+output rather than deleting punctuation or digits from the source text. The
+functions follow the \pkg{tokenizers} contract, so they drop directly into
+`tidytext::unnest_tokens(token = token_nouns)` and related pipelines.
 }

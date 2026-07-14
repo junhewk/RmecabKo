@@ -3,6 +3,19 @@ reset_dictionary_cache <- function() {
   rm(list = ls(cache, all.names = TRUE), envir = cache)
 }
 
+.korean_backend_ready <- function() {
+  tryCatch({
+    info <- RcppMeCab::dictionary_info()
+    probe <- RcppMeCab::pos(enc2utf8("한국어 형태소 분석"), join = FALSE)
+    if (is.list(probe)) {
+      probe <- probe[[1L]]
+    }
+    any(info$type == "system") &&
+      length(probe) > 0L &&
+      any(names(probe) %in% c("NNG", "NNP"))
+  }, error = function(error) FALSE)
+}
+
 fake_dictionary_info <- function(sys_dic = "", user_dic = "") {
   data.frame(
     filename = if (nzchar(sys_dic)) file.path(sys_dic, "sys.dic") else "ko/sys.dic",

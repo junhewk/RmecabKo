@@ -1,0 +1,165 @@
+---
+title: "Korean text analysis with RmecabKo"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Korean text analysis with RmecabKo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+library(RmecabKo)
+backend <- tryCatch({
+  probe <- RcppMeCab::pos(enc2utf8("한국어"), join = FALSE)
+  if (is.list(probe)) probe <- probe[[1L]]
+  any(names(probe) %in% c("NNG", "NNP"))
+}, error = function(e) FALSE)
+has_tidy <- requireNamespace("tidytext", quietly = TRUE) &&
+  requireNamespace("dplyr", quietly = TRUE)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = backend)
+```
+
+`RmecabKo` is a Korean text-analysis layer on top of the `MeCab` morphological
+analyzer. The heavy lifting - the native engine and dictionary compilation -
+comes from `RcppMeCab`; `RmecabKo` adds tokenizers that follow the `tokenizers`
+contract, curated Korean data, user-dictionary tools, and a handful of
+analysis helpers. This vignette walks through a full tidy workflow.
+
+## Setup
+
+Install the engine and a Korean dictionary once per machine:
+
+```{r install, eval = FALSE}
+install.packages("RcppMeCab")
+RcppMeCab::download_dic("ko")
+RcppMeCab::set_dic("ko")
+```
+
+## Normalizing text
+
+`text_normalize()` is a pure, dependency-light cleanup step. It composes
+Unicode (NFC), folds full-width characters, and squashes repeated characters -
+all of which help the analyzer and downstream matching. It needs no backend:
+
+```{r normalize, eval = TRUE}
+text_normalize("한국어 분석 ㅋㅋㅋㅋ 정말 재밌어요!!!!")
+```
+
+## A tidy tokenization
+
+The tokenizers take a character vector and return a list of character vectors,
+so they slot directly into `tidytext::unnest_tokens()`. The package ships a
+small demonstration corpus, `demo_ko`:
+
+```{r demo}
+demo_ko[1:2]
+```
+
+```{r unnest, eval = backend && has_tidy}
+library(dplyr)
+library(tidytext)
+
+corpus <- tibble(doc = names(demo_ko), text = demo_ko)
+tokens <- corpus |>
+  unnest_tokens(word, text, token = token_nouns)
+head(tokens, 8)
+```
+
+Even without a working backend, the pre-computed tokenization bundled with the
+package lets us continue:
+
+```{r fallback, eval = has_tidy}
+library(dplyr)
+tidy_tokens <- if (backend && exists("tokens")) {
+  tokens
+} else {
+  readRDS(system.file("extdata", "demo_ko_tokens.rds", package = "RmecabKo"))
+}
+count(tidy_tokens, word, sort = TRUE) |> head(6)
+```
+
+## Removing stopwords
+
+`stopwords_ko` is a curated table of Korean function morphemes. Filter by
+surface form with an `anti_join()`, or strip whole part-of-speech classes at
+the tag level with `drop_pos`:
+
+```{r stopwords, eval = has_tidy}
+tidy_tokens |>
+  anti_join(data.frame(word = stopwords_ko_words()), by = "word") |>
+  count(word, sort = TRUE) |>
+  head(6)
+```
+
+```{r droppos}
+# drop every particle and ending directly during tokenization
+token_morph(demo_ko[[2]], drop_pos = stopwords_ko_tags(c("josa", "eomi")),
+            simplify = TRUE)
+```
+
+## Keywords and TF-IDF
+
+With a document column in hand, `tidytext::bind_tf_idf()` gives per-document
+keyword weights; `keywords_tfidf()` offers the same without the tidy detour:
+
+```{r tfidf, eval = has_tidy}
+tidy_tokens |>
+  count(doc, word) |>
+  bind_tf_idf(word, doc, n) |>
+  arrange(desc(tf_idf)) |>
+  head(6)
+```
+
+```{r keywords}
+keywords_tfidf(demo_ko, div = "nouns", top_n = 2) |> head(6)
+```
+
+## Sentiment
+
+`lexicon_knu()` downloads and caches the KNU Korean sentiment lexicon (polarity
+from -2 to 2). Joining it against tokens yields a per-document sentiment score.
+The lexicon is distributed under CC BY-NC-SA (Kyungpook National University),
+so it is fetched on demand rather than bundled; note the NonCommercial clause
+and review its terms before use.
+
+```{r sentiment, eval = FALSE}
+senti <- lexicon_knu()
+tidy_tokens |>
+  inner_join(senti[senti$n_words == 1, ], by = "word") |>
+  group_by(doc) |>
+  summarise(score = sum(polarity))
+```
+
+## N-grams, lemmas, and concordances
+
+Morpheme n-grams never bridge a removed stopword:
+
+```{r ngrams}
+token_ngrams(demo_ko[[1]], n = 2, div = "nouns", simplify = TRUE)
+```
+
+`token_lemma()` recovers the dictionary form of predicates, which keeps
+inflected verbs and adjectives from scattering in a frequency count:
+
+```{r lemma}
+token_lemma(c("아침을 먹었다", "날씨가 좋았다"))
+```
+
+`kwic()` shows a keyword in its morpheme context:
+
+```{r kwic}
+kwic(demo_ko, "분석")
+```
+
+## Teaching the analyzer new words
+
+When MeCab splits a name or neologism you care about, register it once and
+activate it for the session. This writes to your user data directory, so it is
+not run here:
+
+```{r userdic, eval = FALSE}
+dict_add_words(c("은전한닢", "카비봇"), tag = "NNP")
+dict_use()
+pos("카비봇 출시 소식")
+dict_words()
+```

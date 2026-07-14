@@ -1,3 +1,50 @@
+# RmecabKo 0.3.0
+
+RmecabKo grows from a thin wrapper into a Korean text-analysis layer over
+`RcppMeCab`, filling the gap left by the archived `KoNLP` and `elbird` packages.
+
+## Tokenizers and tidytext
+
+* Tokenizers now follow the `tokenizers` package contract, so `token_morph()`,
+  `token_words()`, `token_nouns()`, and `token_ngrams()` drop directly into
+  `tidytext::unnest_tokens(token = ...)`. Each gains a `simplify` argument.
+* Add a `drop_pos` argument to `token_morph()` and `token_ngrams()` to remove
+  tokens by POS tag, complementing `keep_pos`.
+* **Breaking:** unnamed input now yields an unnamed list. Previously each
+  element was named after its (potentially long) source document. Named input
+  is unchanged.
+
+## Korean data
+
+* Add `stopwords_ko`, a curated table of Korean function morphemes, with the
+  accessors `stopwords_ko_words()` (surfaces) and `stopwords_ko_tags()` (POS
+  tags for `drop_pos`).
+* Add `lexicon_knu()`, which downloads and caches the KNU Korean sentiment
+  lexicon for tidy sentiment joins.
+* Add the `demo_ko` demonstration corpus.
+
+## User dictionaries
+
+* Add `dict_add_words()`, `dict_words()`, `dict_remove_words()`,
+  `dict_compile()`, `dict_use()`, and `dict_path()` to manage a MeCab user
+  dictionary from a data frame of words, filling the `mecab-ko-dic` context IDs
+  and final-consonant flag automatically.
+
+## Analysis helpers
+
+* Add `token_lemma()` and `lemmatize_morphemes()` to recover dictionary forms
+  of Korean predicates. Fused tokens whose stem `RcppMeCab` does not expose
+  return `NA`.
+* Add `keywords_tfidf()` and `keywords_textrank()` for morpheme keyword
+  extraction, and `kwic()` for keyword-in-context concordances.
+* Add `text_normalize()` for NFC composition, width folding, and repeated-
+  character squashing.
+
+## Documentation
+
+* Add the "Korean text analysis with RmecabKo" vignette walking through a full
+  tidy workflow.
+
 # RmecabKo 0.2.1
 
 * Require the companion `RcppMeCab` 0.0.1.7 release used by the 0.2.0

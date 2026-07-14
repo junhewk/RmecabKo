@@ -3,7 +3,7 @@ test_that("POS list output is stable for scalar, vector, list, and missing input
 
   scalar <- pos("문장", join = FALSE)
   expect_type(scalar, "list")
-  expect_named(scalar, "문장")
+  expect_null(names(scalar))
   expect_named(scalar[[1L]], c("NP", "JX", "SL", "SN", "NNBC", "SF", "VCP+EF"))
 
   documents <- pos(list(first = "하나", second = NA_character_))

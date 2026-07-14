@@ -8,3 +8,6 @@ cran-comments.md
 src/*.o
 src/*.so
 src/*.dll
+
+# built package tarballs
+RmecabKo_*.tar.gz
