@@ -11,3 +11,6 @@ src/*.dll
 
 # built package tarballs
 RmecabKo_*.tar.gz
+
+# R CMD check output
+*.Rcheck/
