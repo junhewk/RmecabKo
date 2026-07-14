@@ -1,0 +1,270 @@
+RmecabKo
+================
+
+<!-- README.md is generated from readme.rmd. Edit this file, then render it. -->
+
+[![R-CMD-check](https://github.com/junhewk/RmecabKo/actions/workflows/R-CMD-check.yaml/badge.svg?branch=master)](https://github.com/junhewk/RmecabKo/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/RmecabKo)](https://CRAN.R-project.org/package=RmecabKo)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/RmecabKo)](https://cran.r-project.org/package=RmecabKo)
+[![CRAN total
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/RmecabKo)](https://cran.r-project.org/package=RmecabKo)
+[![R
+version](https://img.shields.io/badge/R-%E2%89%A5%203.6.0-276DC3.svg)](https://www.r-project.org/)
+[![License: GPL (\>=
+2)](https://img.shields.io/badge/license-GPL%20(%3E%3D%202)-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+
+`RmecabKo` is a Korean text-analysis toolkit for R, built on
+[`RcppMeCab`](https://cran.r-project.org/package=RcppMeCab) and
+`mecab-ko-dic`. It provides `tidytext`-ready tokenizers, curated Korean
+stopword data, access to the KNU sentiment lexicon, friendly
+user-dictionary management, predicate lemmatization, keyword extraction,
+keyword-in-context concordances, and text normalization.
+
+**RmecabKo is the only actively maintained CRAN package dedicated to
+Korean text analysis.** The dedicated alternatives have left CRAN —
+`KoNLP` was archived in 2020 and `elbird` (a Kiwi binding) in 2023 — so
+`RcppMeCab` (the native engine, by the same author) and `RmecabKo` (this
+analysis layer on top of it) are the maintained,
+`install.packages()`-able path for Korean NLP in R.
+
+## What’s new in 0.3.0
+
+- **Tidytext-ready tokenizers.** `token_morph()`, `token_words()`,
+  `token_nouns()`, and `token_ngrams()` follow the `tokenizers`
+  contract, so they drop straight into
+  `tidytext::unnest_tokens(token = ...)`. New `simplify` and `drop_pos`
+  arguments.
+- **Korean data.** `stopwords_ko`, a curated POS-tagged stopword table
+  with `stopwords_ko_words()` / `stopwords_ko_tags()`, and
+  `lexicon_knu()` for the KNU sentiment lexicon.
+- **User dictionaries.** `dict_add_words()` and friends register new
+  words from R, filling the `mecab-ko-dic` context IDs and
+  final-consonant flag for you.
+- **Analysis helpers.** `token_lemma()` (predicate dictionary forms),
+  `keywords_tfidf()` / `keywords_textrank()`, `kwic()`, and
+  `text_normalize()`.
+- A `vignette("korean-text-analysis")` walks through the full tidy
+  workflow.
+
+For Korean documentation, see
+[README_ko.md](https://github.com/junhewk/RmecabKo/blob/master/README_ko.md).
+
+## Why two packages?
+
+The responsibilities are intentionally separated:
+
+| Package | Responsibility |
+|----|----|
+| `RcppMeCab` | Native MeCab build, R/C++ bindings, parallel analysis, dictionary metadata, and user-dictionary compilation |
+| `RmecabKo` | Korean dictionary validation, `tidytext`-ready tokenizers, stopword and sentiment data, user-dictionary management, lemmatization, keyword extraction, KWIC, and text normalization |
+
+This keeps platform-specific native code in one place while allowing
+`RmecabKo` to expose Korean-friendly behavior. If the active MeCab
+dictionary does not produce Korean POS tags, `RmecabKo` stops with a
+diagnostic instead of silently returning Japanese or otherwise
+incompatible results.
+
+## Installation
+
+Install the stable release from CRAN:
+
+``` r
+install.packages("RmecabKo")
+```
+
+Install the development version from GitHub:
+
+``` r
+install.packages("remotes")
+remotes::install_github("junhewk/RmecabKo")
+```
+
+`RcppMeCab` is installed as a dependency and supplies the native MeCab
+interface. Most Korean-profile installations also include the matching
+engine and dictionary. If no Korean dictionary is active, install and
+select one with:
+
+``` r
+RcppMeCab::download_dic("ko")
+RcppMeCab::set_dic("ko")
+```
+
+A compatible `mecab-ko` engine is required; selecting `mecab-ko-dic`
+does not convert a standard Japanese MeCab engine into the Korean
+engine. Alternatively, pass the directory of an existing `mecab-ko-dic`
+installation through `sys_dic`.
+
+## Quick start
+
+``` r
+library(RmecabKo)
+
+text <- c(
+  first = "한국어 형태소 분석을 합니다.",
+  second = "R에서도 빠르게 처리할 수 있습니다."
+)
+
+pos(text)
+nouns(text)
+words(text)
+token_morph(text, strip_punct = TRUE)
+```
+
+Analysis functions accept a character vector or a list containing one
+character value per document. List output always contains one character
+vector per input document, following the `tokenizers` contract: supplied
+document names are preserved, and unnamed input yields an unnamed list.
+
+Missing documents remain `NA_character_`, while valid empty documents
+return `character(0)` from tokenizers and n-gram functions.
+
+## POS tagging
+
+`pos()` is the Korean-validated compatibility layer over
+`RcppMeCab::pos()` and `RcppMeCab::posParallel()`.
+
+``` r
+pos("한국어 형태소 분석")
+pos("한국어 형태소 분석", join = FALSE)
+pos(text, format = "data.frame")
+pos(text, parallel = TRUE)
+```
+
+- `join = TRUE` returns strings such as `"한국어/NNG"`.
+- `join = FALSE` returns morphemes with POS tags stored as vector names.
+- `format = "data.frame"` exposes the structured output from
+  `RcppMeCab`.
+- `parallel = TRUE` uses parallel parsing when multiple documents are
+  supplied.
+
+## Korean tokenizers
+
+The package provides three POS-aware token presets:
+
+| Function | Tokens retained |
+|----|----|
+| `token_morph()` | All morphemes, optionally restricted with `keep_pos` |
+| `token_nouns()` / `nouns()` | Korean POS categories beginning with `N` |
+| `token_words()` / `words()` | Categories beginning with `N`, `V`, `M`, or `I`, plus foreign-language tokens tagged `SL` |
+
+``` r
+token_morph(text)
+token_morph(text, strip_punct = TRUE, strip_numeric = TRUE)
+token_morph(text, keep_pos = c("NNG", "NNP"))
+token_nouns(text)
+token_words(text)
+```
+
+Punctuation and numeric filtering is applied to POS-tagged tokens, not
+to the raw input string. This avoids accidentally joining text before
+morphological analysis. Compound tags such as `VCP+EF` match `keep_pos`
+when any component is selected.
+
+## N-grams and skip-grams
+
+`token_ngrams()` creates n-grams after Korean morphological analysis.
+
+``` r
+token_ngrams(text, n = 2)
+token_ngrams(text, n = 1:3, div = "words")
+token_ngrams(text, n = 2, skip = 0:1)
+token_ngrams(text, n = 2, keep_pos = c("NNG", "NNP"))
+token_ngrams(text, n = 2, stopwords = c("분석"), ngram_delim = "_")
+```
+
+Important semantics:
+
+- `n` accepts one or more positive integer sizes.
+- `skip = 0` creates contiguous n-grams.
+- Larger `skip` values are exact gaps: with tokens `a b c d`, a bigram
+  with `skip = 1` produces `a c` and `b d`.
+- Multiple `n` and `skip` values are returned in requested `n`, `skip`,
+  and document-position order.
+- Stopwords are boundaries. Terms on opposite sides of a stopword never
+  become falsely adjacent.
+- Documents shorter than the requested span return `character(0)`
+  safely.
+
+## Custom dictionaries
+
+Teach the analyzer new words from R without hand-writing `mecab-ko-dic`
+CSV rows. `RmecabKo` fills in the context IDs and final-consonant flag,
+compiles the dictionary through `RcppMeCab`, and activates it for the
+session:
+
+``` r
+dict_add_words(c("은전한닢", "카비봇"), tag = "NNP")
+dict_use()
+pos("카비봇 출시 소식")
+dict_words()
+dict_remove_words("카비봇")
+```
+
+Pass a data frame for finer control over `reading`, `meaning`, and
+`cost`, or supply `left_id`/`right_id` to override the automatic lookup.
+To inspect the dictionary currently loaded by MeCab, use
+`RcppMeCab::dictionary_info()`.
+
+## Tidytext, data, and analysis helpers
+
+The tokenizers follow the `tokenizers` contract, so they drop straight
+into a tidy pipeline, and the package ships curated Korean data and
+analysis helpers:
+
+``` r
+library(dplyr)
+library(tidytext)
+
+tibble(doc = names(demo_ko), text = demo_ko) |>
+  unnest_tokens(word, text, token = token_nouns) |>
+  anti_join(data.frame(word = stopwords_ko_words()), by = "word") |>
+  count(doc, word, sort = TRUE)
+
+keywords_tfidf(demo_ko, div = "nouns")       # TF-IDF keywords
+token_lemma("아침을 먹었다")                  # predicate dictionary forms
+kwic(demo_ko, "분석")                         # keyword in context
+text_normalize("분석 ㅋㅋㅋㅋ 재밌어요!!!!")  # NFC, width, run squashing
+lexicon_knu()                                 # KNU sentiment lexicon
+```
+
+See `vignette("korean-text-analysis")` for a full walkthrough.
+
+## Migrating to 0.2.0
+
+Version 0.2.0 removes the duplicated native POS implementation and
+relies on `RcppMeCab` for all MeCab integration. Existing public
+analysis functions are retained, with these intentional changes:
+
+- `install_mecab()` is deprecated because `RcppMeCab` installs the
+  engine and dictionary.
+- The old unexported dictionary installer is removed; use
+  `RcppMeCab::dict_index()` for user dictionaries.
+- Noun extraction once again retains all Korean `N*` categories.
+- Token output is consistently list-based and never simplified by
+  `sapply()`.
+- Stopwords split n-gram sequences instead of creating artificial
+  adjacency.
+- Invalid n-gram sizes and skips now fail clearly instead of risking
+  native indexing errors.
+
+## Development
+
+The test suite includes deterministic unit tests, native n-gram tests,
+and an end-to-end Korean dictionary integration test. GitHub Actions
+checks R release on Linux, macOS, and Windows, R-devel on Linux, and
+verifies that a Japanese dictionary is rejected clearly.
+
+``` r
+devtools::test()
+devtools::check(args = c("--as-cran", "--no-manual"))
+```
+
+Please report bugs and feature requests in the [GitHub issue
+tracker](https://github.com/junhewk/RmecabKo/issues).
+
+## License
+
+`RmecabKo` is licensed under GPL (\>= 2). See the package `DESCRIPTION`
+for details.

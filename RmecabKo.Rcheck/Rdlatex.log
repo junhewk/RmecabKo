@@ -1,0 +1,149 @@
+Hmm ... looks like a package
+Converting parsed Rd's to LaTeX .
+Creating pdf output from LaTeX ...
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2025/01/22 v1.4n Standard LaTeX document class
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo)) (/opt/homebrew/Cellar/r/4.6.1/lib/R/share/texmf/tex/latex/Rd.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty)) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty)) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/eucal.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex))))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty)))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+Writing index file Rd2.idx
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)
+No file Rd2.aux.
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd)
+No file Rd2.toc.
+[1{/Users/jk/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/jk/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/Users/jk/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}] [2]
+Overfull \hbox (11.11713pt too wide) in paragraph at lines 153--155
+[]\T1/ptm/m/n/10 Optional se-man-tic class (the `mecab-ko-dic` se-man-tic field, for ex-am-ple a personal-
+[3] [4]
+Overfull \hbox (2.23827pt too wide) in paragraph at lines 263--265
+[]\T1/ptm/m/n/10 Character to-kens to drop be-fore scor-ing. Com-bine with [stop-words_ko_words()]. 
+[5]
+Overfull \hbox (2.23827pt too wide) in paragraph at lines 329--331
+[]\T1/ptm/m/n/10 Character to-kens to drop be-fore scor-ing. Com-bine with [stop-words_ko_words()]. 
+[6] [7] [8]
+Overfull \hbox (78.44717pt too wide) in paragraph at lines 489--491
+[]\T1/ptm/m/n/10 Directory for the cached copy. De-faults to a `lex-i-cons` sub-folder of `tools::R_user_dir("RmecabKo",
+[9] [10] [11] [12]
+Overfull \hbox (2.98764pt too wide) in paragraph at lines 741--744
+[]\T1/ptm/m/n/10 Fold char-ac-ter width: `"halfwidth"` con-verts full-width Latin and dig-its to ASCII,
+[13] [14] [15] [16]
+No file Rd2.ind.
+[17] (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)</Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (17 pages, 109925 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (30 entries accepted, 0 rejected).
+Sorting entries....done (144 comparisons).
+Generating output file Rd2.ind....done (74 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2025/01/22 v1.4n Standard LaTeX document class
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo)) (/opt/homebrew/Cellar/r/4.6.1/lib/R/share/texmf/tex/latex/Rd.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty)) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty)) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/eucal.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex))))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty)))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+Writing index file Rd2.idx
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def) (./Rd2.aux) (./Rd2.out) (./Rd2.out) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd) (./Rd2.toc [1{/Users/jk/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/jk/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/Users/jk/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}]) [2]
+Overfull \hbox (11.11713pt too wide) in paragraph at lines 153--155
+[]\T1/ptm/m/n/10 Optional se-man-tic class (the `mecab-ko-dic` se-man-tic field, for ex-am-ple a personal-
+[3] [4]
+Overfull \hbox (2.23827pt too wide) in paragraph at lines 263--265
+[]\T1/ptm/m/n/10 Character to-kens to drop be-fore scor-ing. Com-bine with [stop-words_ko_words()]. 
+[5]
+Overfull \hbox (2.23827pt too wide) in paragraph at lines 329--331
+[]\T1/ptm/m/n/10 Character to-kens to drop be-fore scor-ing. Com-bine with [stop-words_ko_words()]. 
+[6] [7] [8]
+Overfull \hbox (78.44717pt too wide) in paragraph at lines 489--491
+[]\T1/ptm/m/n/10 Directory for the cached copy. De-faults to a `lex-i-cons` sub-folder of `tools::R_user_dir("RmecabKo",
+[9] [10] [11] [12]
+Overfull \hbox (2.98764pt too wide) in paragraph at lines 741--744
+[]\T1/ptm/m/n/10 Fold char-ac-ter width: `"halfwidth"` con-verts full-width Latin and dig-its to ASCII,
+[13] [14] [15] [16] (./Rd2.ind [17]
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 13.
+
+[18]) (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)</Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (18 pages, 122704 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (30 entries accepted, 0 rejected).
+Sorting entries....done (144 comparisons).
+Generating output file Rd2.ind....done (74 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2025/01/22 v1.4n Standard LaTeX document class
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo)) (/opt/homebrew/Cellar/r/4.6.1/lib/R/share/texmf/tex/latex/Rd.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty)) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty)) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/eucal.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.sty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex))))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def) (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty (/Users/jk/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty)))) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+Writing index file Rd2.idx
+(/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def) (./Rd2.aux) (./Rd2.out) (./Rd2.out) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd) (/Users/jk/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd) (./Rd2.toc [1{/Users/jk/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/jk/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{/Users/jk/Library/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}]) [2] [3]
+Overfull \hbox (11.11713pt too wide) in paragraph at lines 153--155
+[]\T1/ptm/m/n/10 Optional se-man-tic class (the `mecab-ko-dic` se-man-tic field, for ex-am-ple a personal-
+[4] [5]
+Overfull \hbox (2.23827pt too wide) in paragraph at lines 263--265
+[]\T1/ptm/m/n/10 Character to-kens to drop be-fore scor-ing. Com-bine with [stop-words_ko_words()]. 
+[6]
+Overfull \hbox (2.23827pt too wide) in paragraph at lines 329--331
+[]\T1/ptm/m/n/10 Character to-kens to drop be-fore scor-ing. Com-bine with [stop-words_ko_words()]. 
+[7] [8]
+Overfull \hbox (78.44717pt too wide) in paragraph at lines 489--491
+[]\T1/ptm/m/n/10 Directory for the cached copy. De-faults to a `lex-i-cons` sub-folder of `tools::R_user_dir("RmecabKo",
+[9] [10] [11] [12] [13]
+Overfull \hbox (2.98764pt too wide) in paragraph at lines 741--744
+[]\T1/ptm/m/n/10 Fold char-ac-ter width: `"halfwidth"` con-verts full-width Latin and dig-its to ASCII,
+[14] [15] [16] [17] (./Rd2.ind [18]
+
+LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
+(Font)              using `T1/zi4/m/n' instead on input line 13.
+
+[19]) (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)</Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/jk/Library/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (19 pages, 124284 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘RmecabKo-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -Rf /var/folders/0y/fljlfdns6m3__cj6xv0hhfdw0000gn/T//RtmpN3HUcr/Rd2pdfd73b3cae3c28'

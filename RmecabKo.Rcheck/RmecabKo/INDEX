@@ -1,0 +1,19 @@
+demo_ko                 Korean demonstration sentences
+dict_add_words          Manage a MeCab user dictionary from R
+install_mecab           Deprecated MeCab installer
+keywords_textrank       Keyword extraction with TextRank
+keywords_tfidf          Keyword extraction with TF-IDF
+kwic                    Keyword-in-context concordance
+lemmatize_morphemes     Recover dictionary forms of Korean predicates
+lexicon_knu             Korean sentiment lexicon (KNU)
+nouns                   Extract Korean nouns
+pos                     Korean part-of-speech tagging
+stopwords_ko            Korean stopword table
+stopwords_ko_tags       Korean stopword POS tags
+stopwords_ko_words      Korean stopword surfaces
+text_normalize          Normalize Korean text before tokenizing
+token_lemma             Tokenize Korean text into predicate dictionary
+                        forms
+token_morph             Korean morpheme tokenizers
+token_ngrams            Korean morpheme n-grams and skip-grams
+words                   Extract Korean content words
